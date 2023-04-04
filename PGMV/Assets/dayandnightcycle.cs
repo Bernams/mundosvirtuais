@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class dayandnightcycle : MonoBehaviour
-{
-    
+{    
     Vector3 rot=Vector3.zero;
     float degpersec = 1;
 
