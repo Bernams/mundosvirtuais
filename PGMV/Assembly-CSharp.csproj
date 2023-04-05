@@ -56,7 +56,18 @@
     <Analyzer Include="/Applications/Visual Studio.app/Contents/MonoBundle/Addins/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Reflection.cs" />
     <Compile Include="Assets/dayandnightcycle.cs" />
+    <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Camera.cs" />
+    <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_CamNav.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets/AQUAS-Lite/Shaders/AQUAS-Lite_Frontface.shader" />
+    <None Include="Assets/AQUAS-Lite/Readme.txt" />
+    <None Include="Assets/Ultra Skybox Fog/Textures/Readme.txt" />
+    <None Include="Assets/AQUAS-Lite/Shaders/AQUAS-Lite_Backface.shader" />
+    <None Include="Assets/Ultra Skybox Fog/Shaders/UltraSkyboxFog.shader" />
+    <None Include="Assets/Ultra Skybox Fog/Manual.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
