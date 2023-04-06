@@ -1,15 +1,14 @@
-using System.Numerics;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
     public GameObject pivot;
-    public float rotationSpeed = 50f;
 
+    private float rotationSpeed = 50f;
     private bool isOpen = false;
-    private UnityEngine.Quaternion startRotation;
-    private UnityEngine.Quaternion targetRotation;
-    private UnityEngine.Quaternion currentRotation;
+    private Quaternion startRotation;
+    private Quaternion targetRotation;
+    private Quaternion currentRotation;
 
     private void Start()
     {
@@ -23,7 +22,7 @@ public class DoorController : MonoBehaviour
         if (other.CompareTag("Player") && !isOpen)
         {
             isOpen = true;
-            targetRotation = UnityEngine.Quaternion.Euler(-90f, 0f, 0f);
+            targetRotation = Quaternion.Euler(-90f, 0f, 0f);
         }
     }
 
@@ -31,11 +30,8 @@ public class DoorController : MonoBehaviour
     {
         if (other.CompareTag("Player") && isOpen)
         {
-            if (currentRotation == targetRotation)
-            {
-                isOpen = false;
-                targetRotation = startRotation;
-            }
+            isOpen = false;
+            targetRotation = startRotation;
         }
     }
 
@@ -43,11 +39,20 @@ public class DoorController : MonoBehaviour
     {
         if (isOpen)
         {
-            pivot.transform.rotation = UnityEngine.Quaternion.RotateTowards(pivot.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            pivot.transform.rotation = Quaternion.RotateTowards(pivot.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
             if (pivot.transform.rotation == targetRotation)
             {
                 currentRotation = targetRotation;
+            }
+        }
+        else
+        {
+            pivot.transform.rotation = Quaternion.RotateTowards(pivot.transform.rotation, startRotation, rotationSpeed * Time.deltaTime);
+
+            if (pivot.transform.rotation == startRotation)
+            {
+                currentRotation = startRotation;
             }
         }
     }
