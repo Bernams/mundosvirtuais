@@ -355,6 +355,7 @@
 "Assets/AQUAS-Lite/Scripts/AQUAS_Lite_CamNav.cs"
 "Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Reflection.cs"
 "Assets/dayandnightcycle.cs"
+"Assets/Scripts/DoorController.cs"
 -langversion:9.0
 
 /deterministic
