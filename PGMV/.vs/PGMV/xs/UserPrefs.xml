@@ -1,20 +1,25 @@
 ﻿<Properties StartupConfiguration="{CD44F808-013C-553B-A578-FC6931A27E08}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/dayandnightcycle.cs">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="28934107-12ee-4a97-868d-6f1b4c5aa55c" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/DoorController.cs">
     <Files>
-      <File FileName="Assets/dayandnightcycle.cs" Line="19" Column="1" />
+      <File FileName="Assets/Scripts/DoorController.cs" Line="42" Column="133" />
+      <File FileName="Assets/Scripts/PlayerController.cs" Line="16" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="PGMV" expanded="True" />
+          <Node name="PGMV" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True" />
+            </Node>
+          </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="4dcd89e1-bec7-4626-bc29-70e66785af94" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
