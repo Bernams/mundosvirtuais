@@ -355,11 +355,13 @@
 "Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Camera.cs"
 "Assets/AQUAS-Lite/Scripts/AQUAS_Lite_CamNav.cs"
 "Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Reflection.cs"
+"Assets/Scripts/CameraFollow.cs"
 "Assets/Scripts/DayNightCycle.cs"
 "Assets/Scripts/DoorController.cs"
 "Assets/Scripts/LampController.cs"
 "Assets/Scripts/Moon_Controller.cs"
 "Assets/Scripts/PlayerController.cs"
+"Assets/Scripts/VehicleController.cs"
 -langversion:9.0
 
 /deterministic

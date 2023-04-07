@@ -36,4 +36,14 @@ public class DayNightCycle : MonoBehaviour
     {
         return timer / cycleDuration;
     }
+
+    public float GetTimer()
+    {
+        return timer;
+    }
+
+    public float GetSunAngle()
+    {
+        return Mathf.Lerp(-90f, 270f, GetTimePercent());
+    }
 }
