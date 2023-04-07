@@ -358,6 +358,7 @@
 "Assets/Scripts/DayNightCycle.cs"
 "Assets/Scripts/DoorController.cs"
 "Assets/Scripts/LampController.cs"
+"Assets/Scripts/Moon_Controller.cs"
 "Assets/Scripts/PlayerController.cs"
 -langversion:9.0
 
