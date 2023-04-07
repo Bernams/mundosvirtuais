@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb2d8c98ebecceecba7b48110c65cca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cycleLengthInSeconds: 10
+  cycleDuration: 30
 --- !u!1001 &864956033
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1062,7 +1062,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60315eda468c14b63962d4de4ace7f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lamp: {fileID: 1804701257}
+  dayNightCycle: {fileID: 705507996}
+  pointLight: {fileID: 1804701257}
 --- !u!1 &1824064907
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,14 +1131,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1824064907}
-  m_LocalRotation: {x: 0.021518558, y: 0.9381841, z: 0.08885943, w: -0.33384374}
+  m_LocalRotation: {x: 0.011474729, y: 0.9095569, z: 0.07770976, w: -0.40808794}
   m_LocalPosition: {x: 1359, y: 27.24, z: 1891.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: -10.434, y: 219.276, z: -1.104}
+  m_LocalEulerAnglesHint: {x: -8.669, y: 228.515, z: -2.467}
 --- !u!1 &1889135116
 GameObject:
   m_ObjectHideFlags: 0

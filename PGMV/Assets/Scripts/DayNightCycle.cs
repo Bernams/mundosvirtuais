@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class DayNightCycle : MonoBehaviour
 {
-    [SerializeField] private float cycleDuration = 60f; // default duration of 60 seconds
+    [SerializeField] private float cycleDuration = 60f;
 
-    private float timer; // keeps track of time elapsed since start of cycle
-    private Light directionalLight; // reference to the directional light
+    private float timer;
+    private Light directionalLight;
 
     private void Start()
     {
@@ -16,10 +16,10 @@ public class DayNightCycle : MonoBehaviour
     {
         timer += Time.deltaTime;
 
-        float timePercent = timer / cycleDuration; // value between 0 and 1 representing the current time in the cycle
-        float sunAngle = Mathf.Lerp(-90f, 270f, timePercent); // interpolate sun/moon angle based on time
+        float timePercent = timer / cycleDuration;
+        float sunAngle = Mathf.Lerp(-90f, 270f, timePercent);
 
-        directionalLight.transform.localRotation = Quaternion.Euler(new Vector3(sunAngle, 0f, 0f)); // rotate the light
+        directionalLight.transform.localRotation = Quaternion.Euler(new Vector3(sunAngle, 0f, 0f));
 
         if (timer >= cycleDuration)
         {
@@ -30,5 +30,10 @@ public class DayNightCycle : MonoBehaviour
     public void SetCycleDuration(float duration)
     {
         cycleDuration = duration;
+    }
+
+    public float GetTimePercent()
+    {
+        return timer / cycleDuration;
     }
 }
