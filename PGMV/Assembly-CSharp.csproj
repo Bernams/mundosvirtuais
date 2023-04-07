@@ -57,11 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Reflection.cs" />
-    <Compile Include="Assets/dayandnightcycle.cs" />
+    <Compile Include="Assets/Scripts/DayNightCycle.cs" />
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Camera.cs" />
     <Compile Include="Assets/Scripts/PlayerController.cs" />
     <Compile Include="Assets/Scripts/DoorController.cs" />
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_CamNav.cs" />
+    <Compile Include="Assets/Scripts/LampController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/AQUAS-Lite/Shaders/AQUAS-Lite_Frontface.shader" />
