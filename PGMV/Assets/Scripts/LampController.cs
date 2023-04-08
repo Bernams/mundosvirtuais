@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class LampController : MonoBehaviour
 {
-    [SerializeField] private DayNightCycle dayNightCycle;
+    [SerializeField] private NewDayNightCycle dayNightCycle;
     [SerializeField] private Light pointLight;
 
     private void Update()
     {
-        float timePercent = dayNightCycle.GetTimePercent();
+        bool isNight = dayNightCycle.isNight();
 
-        if (timePercent > 0.25f && timePercent < 0.75f)
+        if (isNight)
         {
-            pointLight.intensity = 0f;
+            pointLight.intensity = 1f;
         }
         else
         {
-            pointLight.intensity = 1f;
+            pointLight.intensity = 0f;
         }
     }
 }

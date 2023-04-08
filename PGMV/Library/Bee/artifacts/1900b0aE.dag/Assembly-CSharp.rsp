@@ -360,6 +360,7 @@
 "Assets/Scripts/DoorController.cs"
 "Assets/Scripts/LampController.cs"
 "Assets/Scripts/Moon_Controller.cs"
+"Assets/Scripts/NewDayNightCycle.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/VehicleController.cs"
 -langversion:9.0
