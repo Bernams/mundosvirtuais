@@ -60,6 +60,7 @@
     <Compile Include="Assets/Scripts/DayNightCycle.cs" />
     <Compile Include="Assets/Scripts/VehicleController.cs" />
     <Compile Include="Assets/Scripts/NewDayNightCycle.cs" />
+    <Compile Include="Assets/Scripts/FurnitureGenerator.cs" />
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Camera.cs" />
     <Compile Include="Assets/Scripts/LampController.cs" />
     <Compile Include="Assets/Scripts/PlayerController.cs" />
