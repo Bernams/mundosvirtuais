@@ -16,7 +16,8 @@ public class FurnitureGenerator : MonoBehaviour
         float randomX = Random.Range(minX, maxX);
         float randomZ = Random.Range(minZ, maxZ);
         float randomYRotation = Random.Range(minYRotation, maxYRotation);
-        Vector3 randomPosition = new Vector3(randomX, transform.position.y, randomZ);
+
+        Vector3 randomPosition = transform.position + new Vector3(randomX, 0, randomZ);
         Quaternion randomRotation = Quaternion.Euler(0f, randomYRotation, 0f);
         transform.position = randomPosition;
         transform.rotation = randomRotation;
