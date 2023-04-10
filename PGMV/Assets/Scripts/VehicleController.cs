@@ -8,16 +8,19 @@ public class VehicleController : MonoBehaviour
     public Transform[] wheelMeshes;
     public float maxMotorTorque = 200f;
     public float maxSteeringAngle = 30f;
+    public float rearSteeringAngleFactor = 0.3f; 
     public float maxSpeed = 50f;
     public float decelerationForce = 15f;
     public float antiRollForce = 10000f;
     public float centerOfMassY = -1.0f;
+    public float brakePower;
 
     private Rigidbody rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.centerOfMass = new Vector3(rb.centerOfMass.x, centerOfMassY, rb.centerOfMass.z);
     }
 
@@ -30,11 +33,14 @@ public class VehicleController : MonoBehaviour
     {
         float motorInput = Input.GetAxis("Vertical");
         float steeringInput = Input.GetAxis("Horizontal");
+        bool braking = Input.GetKey(KeyCode.Space);
 
         Drive(motorInput);
         Steer(steeringInput);
         DecelerateWhenNoInput(motorInput);
         ApplyAntiRollForce();
+        float brakeForce = braking ? brakePower : 0f;
+        ApplyBraking(braking, brakeForce);
     }
 
 
@@ -53,9 +59,13 @@ public class VehicleController : MonoBehaviour
 
     private void Steer(float input)
     {
-        float steeringAngle = input * maxSteeringAngle;
-        wheelColliders[0].steerAngle = steeringAngle;
-        wheelColliders[1].steerAngle = steeringAngle;
+        float frontSteeringAngle = input * maxSteeringAngle;
+        wheelColliders[0].steerAngle = frontSteeringAngle;
+        wheelColliders[1].steerAngle = frontSteeringAngle;
+
+        float rearSteeringAngle = frontSteeringAngle * rearSteeringAngleFactor;
+        wheelColliders[2].steerAngle = rearSteeringAngle;
+        wheelColliders[3].steerAngle = rearSteeringAngle;
     }
 
     private void DecelerateWhenNoInput(float motorInput)
@@ -72,6 +82,17 @@ public class VehicleController : MonoBehaviour
             foreach (WheelCollider wheel in wheelColliders)
             {
                 wheel.brakeTorque = 0;
+            }
+        }
+    }
+
+    private void ApplyBraking(bool braking, float brakeForce)
+    {
+        if (braking)
+        {
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.brakeTorque = brakeForce;
             }
         }
     }
