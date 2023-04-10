@@ -4,71 +4,125 @@ using UnityEngine;
 
 public class VehicleController : MonoBehaviour
 {
-    private float horInput, vertInput;
-    private float currSteerAngle, currBrakeForce;
-    private bool braking;
+    public WheelCollider[] wheelColliders;
+    public Transform[] wheelMeshes;
+    public float maxMotorTorque = 200f;
+    public float maxSteeringAngle = 30f;
+    public float maxSpeed = 50f;
+    public float decelerationForce = 15f;
+    public float antiRollForce = 10000f;
+    public float centerOfMassY = -1.0f;
 
-    // Configuration
-    [SerializeField] private float enginePower, brakePower, maxSteeringAngle;
+    private Rigidbody rb;
 
-    // Wheel Colliders
-    [SerializeField] private WheelCollider flWheelCollider, frWheelCollider;
-    [SerializeField] private WheelCollider rlWheelCollider, rrWheelCollider;
-
-    // Wheel Transforms
-    [SerializeField] private Transform flWheelTransform, frWheelTransform;
-    [SerializeField] private Transform rlWheelTransform, rrWheelTransform;
-
-    private void FixedUpdate() {
-        AcquireInput();
-        ManageMotor();
-        ManageSteering();
-        UpdateWheelPositions();
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+        rb.centerOfMass = new Vector3(rb.centerOfMass.x, centerOfMassY, rb.centerOfMass.z);
     }
 
-    private void AcquireInput() {
-        // Steering Input
-        horInput = Input.GetAxis("Horizontal");
-
-        // Throttle Input
-        vertInput = Input.GetAxis("Vertical");
-
-        // Brake Input
-        braking = Input.GetKey(KeyCode.Space);
+    private void Update()
+    {
+        UpdateWheelMeshesPositions();
     }
 
-    private void ManageMotor() {
-        flWheelCollider.motorTorque = vertInput * enginePower;
-        frWheelCollider.motorTorque = vertInput * enginePower;
-        currBrakeForce = braking ? brakePower : 0f;
-        ApplyBraking();
+    private void FixedUpdate()
+    {
+        float motorInput = Input.GetAxis("Vertical");
+        float steeringInput = Input.GetAxis("Horizontal");
+
+        Drive(motorInput);
+        Steer(steeringInput);
+        DecelerateWhenNoInput(motorInput);
+        ApplyAntiRollForce();
     }
 
-    private void ApplyBraking() {
-        frWheelCollider.brakeTorque = currBrakeForce;
-        flWheelCollider.brakeTorque = currBrakeForce;
-        rlWheelCollider.brakeTorque = currBrakeForce;
-        rrWheelCollider.brakeTorque = currBrakeForce;
+
+
+    private void Drive(float input)
+    {
+        if (rb.velocity.magnitude < maxSpeed)
+        {
+            float motorTorque = input * maxMotorTorque;
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.motorTorque = motorTorque;
+            }
+        }
     }
 
-    private void ManageSteering() {
-        currSteerAngle = maxSteeringAngle * horInput;
-        flWheelCollider.steerAngle = currSteerAngle;
-        frWheelCollider.steerAngle = currSteerAngle;
+    private void Steer(float input)
+    {
+        float steeringAngle = input * maxSteeringAngle;
+        wheelColliders[0].steerAngle = steeringAngle;
+        wheelColliders[1].steerAngle = steeringAngle;
     }
 
-    private void UpdateWheelPositions() {
-        UpdateSingleWheelPosition(flWheelCollider, flWheelTransform);
-        UpdateSingleWheelPosition(frWheelCollider, frWheelTransform);
-        UpdateSingleWheelPosition(rrWheelCollider, rrWheelTransform);
-        UpdateSingleWheelPosition(rlWheelCollider, rlWheelTransform);
+    private void DecelerateWhenNoInput(float motorInput)
+    {
+        if (Mathf.Abs(motorInput) < 0.1f)
+        {
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.brakeTorque = decelerationForce;
+            }
+        }
+        else
+        {
+            foreach (WheelCollider wheel in wheelColliders)
+            {
+                wheel.brakeTorque = 0;
+            }
+        }
     }
 
-    private void UpdateSingleWheelPosition(WheelCollider wheelCol, Transform wheelTrans) {
-        Vector3 position;
-        Quaternion rotation; 
-        wheelCol.GetWorldPose(out position, out rotation);
-        wheelTrans.rotation = rotation;
-        wheelTrans.position = position;
+    private void ApplyAntiRollForce()
+    {
+        for (int i = 0; i < wheelColliders.Length - 1; i += 2)
+        {
+            WheelCollider wheelL = wheelColliders[i];
+            WheelCollider wheelR = wheelColliders[i + 1];
+
+            WheelHit hit;
+            float travelL = 1.0f;
+            float travelR = 1.0f;
+
+            bool groundedL = wheelL.GetGroundHit(out hit);
+            if (groundedL)
+                travelL = (-wheelL.transform.InverseTransformPoint(hit.point).y - wheelL.radius) / wheelL.suspensionDistance;
+
+            bool groundedR = wheelR.GetGroundHit(out hit);
+            if (groundedR)
+                travelR = (-wheelR.transform.InverseTransformPoint(hit.point).y - wheelR.radius) / wheelR.suspensionDistance;
+
+            antiRollForce = (travelL - travelR) * antiRollForce;
+
+            if (groundedL)
+                rb.AddForceAtPosition(wheelL.transform.up * -antiRollForce, wheelL.transform.position);
+            if (groundedR)
+                rb.AddForceAtPosition(wheelR.transform.up * antiRollForce, wheelR.transform.position);
+        }
+    }
+
+    private void UpdateWheelMeshesPositions()
+    {
+        for (int i = 0; i < wheelColliders.Length; i++)
+        {
+            Quaternion quat;
+            Vector3 pos;
+            wheelColliders[i].GetWorldPose(out pos, out quat);
+
+            wheelMeshes[i].position = pos;
+            wheelMeshes[i].rotation = quat;
+        }
+    }
+
+    private void UnflipCar()
+    {
+        if (transform.up.y < 0)
+        {
+            Quaternion targetRotation = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100 * Time.deltaTime);
+        }
     }
 }
