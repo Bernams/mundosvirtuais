@@ -42,8 +42,8 @@ public class VehicleController : MonoBehaviour
         ApplyAntiRollForce();
         float brakeForce = braking ? brakePower : 0f;
         ApplyBraking(braking, brakeForce);
-        WheelAxle(wheelColliders[0], wheelColliders[1]);
-        WheelAxle(wheelColliders[2], wheelColliders[3]);
+        //WheelAxle(wheelColliders[0], wheelColliders[1]);
+        //WheelAxle(wheelColliders[2], wheelColliders[3]);
     }
 
 
