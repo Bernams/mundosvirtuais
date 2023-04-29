@@ -14,6 +14,7 @@ public class VehicleController : MonoBehaviour
     public float antiRollForce = 10000f;
     public float centerOfMassY = -1.0f;
     public float brakePower;
+    public float antiRoll = 5000.0f;
 
     private Rigidbody rb;
 
@@ -41,6 +42,8 @@ public class VehicleController : MonoBehaviour
         ApplyAntiRollForce();
         float brakeForce = braking ? brakePower : 0f;
         ApplyBraking(braking, brakeForce);
+        WheelAxle(wheelColliders[0], wheelColliders[1]);
+        WheelAxle(wheelColliders[2], wheelColliders[3]);
     }
 
 
@@ -54,6 +57,33 @@ public class VehicleController : MonoBehaviour
             {
                 wheel.motorTorque = motorTorque;
             }
+        }
+    }
+
+    private void WheelAxle(WheelCollider wheelL, WheelCollider wheelR)
+    {
+        WheelHit hit;
+        float travelL = 1.0f;
+        float travelR = 1.0f;
+
+        bool groundedL = wheelL.GetGroundHit(out hit);
+        if (groundedL) {
+            travelL = (-wheelL.transform.InverseTransformPoint(hit.point).y - wheelL.radius) / wheelL.suspensionDistance;
+        }
+
+        bool groundedR = wheelR.GetGroundHit(out hit);
+        if (groundedR) {
+            travelR = (-wheelR.transform.InverseTransformPoint(hit.point).y - wheelR.radius) / wheelR.suspensionDistance;
+        }
+
+        float antiRollForce = (travelL - travelR) * antiRoll;
+
+        if (groundedL) {
+            rb.AddForceAtPosition(wheelL.transform.up * -antiRollForce, wheelL.transform.position);
+        }
+
+        if (groundedR) {
+            rb.AddForceAtPosition(wheelR.transform.up * antiRollForce, wheelR.transform.position);
         }
     }
 
