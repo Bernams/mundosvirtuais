@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
 public class VehicleController : MonoBehaviour
 {
@@ -8,21 +9,23 @@ public class VehicleController : MonoBehaviour
     public Transform[] wheelMeshes;
     public float maxMotorTorque = 200f;
     public float maxSteeringAngle = 30f;
-    public float rearSteeringAngleFactor = 0.3f; 
     public float maxSpeed = 50f;
     public float decelerationForce = 15f;
     public float antiRollForce = 10000f;
-    public float centerOfMassY = -1.0f;
+    //public float centerOfMassY = -1.0f;
     public float brakePower;
-    public float antiRoll = 5000.0f;
+    
+    public CinemachineVirtualCamera cam;
 
     private Rigidbody rb;
+    private bool changedCam = false;
+    private bool grounded = false;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
-        rb.centerOfMass = new Vector3(rb.centerOfMass.x, centerOfMassY, rb.centerOfMass.z);
+        rb.centerOfMass = new Vector3(rb.centerOfMass.x, 0.5f, 0.3f);
     }
 
     private void Update()
@@ -36,14 +39,30 @@ public class VehicleController : MonoBehaviour
         float steeringInput = Input.GetAxis("Horizontal");
         bool braking = Input.GetKey(KeyCode.Space);
 
+
         Drive(motorInput);
         Steer(steeringInput);
         DecelerateWhenNoInput(motorInput);
         ApplyAntiRollForce();
         float brakeForce = braking ? brakePower : 0f;
         ApplyBraking(braking, brakeForce);
-        //WheelAxle(wheelColliders[0], wheelColliders[1]);
-        //WheelAxle(wheelColliders[2], wheelColliders[3]);
+        UnflipCar();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Garage") && !changedCam){
+            cam.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance = 4;
+            changedCam = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Garage") && changedCam){
+            cam.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance = 8;
+            changedCam = false;
+        }
     }
 
 
@@ -60,42 +79,11 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-    private void WheelAxle(WheelCollider wheelL, WheelCollider wheelR)
-    {
-        WheelHit hit;
-        float travelL = 1.0f;
-        float travelR = 1.0f;
-
-        bool groundedL = wheelL.GetGroundHit(out hit);
-        if (groundedL) {
-            travelL = (-wheelL.transform.InverseTransformPoint(hit.point).y - wheelL.radius) / wheelL.suspensionDistance;
-        }
-
-        bool groundedR = wheelR.GetGroundHit(out hit);
-        if (groundedR) {
-            travelR = (-wheelR.transform.InverseTransformPoint(hit.point).y - wheelR.radius) / wheelR.suspensionDistance;
-        }
-
-        float antiRollForce = (travelL - travelR) * antiRoll;
-
-        if (groundedL) {
-            rb.AddForceAtPosition(wheelL.transform.up * -antiRollForce, wheelL.transform.position);
-        }
-
-        if (groundedR) {
-            rb.AddForceAtPosition(wheelR.transform.up * antiRollForce, wheelR.transform.position);
-        }
-    }
-
     private void Steer(float input)
     {
         float frontSteeringAngle = input * maxSteeringAngle;
         wheelColliders[0].steerAngle = frontSteeringAngle;
         wheelColliders[1].steerAngle = frontSteeringAngle;
-
-        float rearSteeringAngle = frontSteeringAngle * rearSteeringAngleFactor;
-        wheelColliders[2].steerAngle = rearSteeringAngle;
-        wheelColliders[3].steerAngle = rearSteeringAngle;
     }
 
     private void DecelerateWhenNoInput(float motorInput)
@@ -106,6 +94,7 @@ public class VehicleController : MonoBehaviour
             {
                 wheel.brakeTorque = decelerationForce;
             }
+            rb.drag = 0.7f;
         }
         else
         {
@@ -113,17 +102,23 @@ public class VehicleController : MonoBehaviour
             {
                 wheel.brakeTorque = 0;
             }
+            rb.drag = 0;
         }
     }
 
     private void ApplyBraking(bool braking, float brakeForce)
     {
-        if (braking)
+        if (braking && grounded)
         {
             foreach (WheelCollider wheel in wheelColliders)
             {
                 wheel.brakeTorque = brakeForce;
             }
+            rb.drag = 1;
+        }
+        else
+        {
+            rb.drag = 0;
         }
     }
 
@@ -145,6 +140,8 @@ public class VehicleController : MonoBehaviour
             bool groundedR = wheelR.GetGroundHit(out hit);
             if (groundedR)
                 travelR = (-wheelR.transform.InverseTransformPoint(hit.point).y - wheelR.radius) / wheelR.suspensionDistance;
+
+            grounded = groundedL && groundedR;
 
             antiRollForce = (travelL - travelR) * antiRollForce;
 
