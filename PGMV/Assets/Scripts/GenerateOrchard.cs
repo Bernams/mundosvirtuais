@@ -12,15 +12,15 @@ public class GenerateOrchard : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Terrain orchard = GetComponent<Terrain>();
-        orchard.terrainData = OrchardGenerator(orchard.terrainData);
+        
         
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Terrain orchard = GetComponent<Terrain>();
+        orchard.terrainData = OrchardGenerator(orchard.terrainData);
     }
 
     TerrainData OrchardGenerator(TerrainData terrainData)
