@@ -1,15 +1,11 @@
 ﻿<Properties StartupConfiguration="{CD44F808-013C-553B-A578-FC6931A27E08}|">
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c7c2cef6-b67d-43e0-ab75-d212620314b0" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/DoorController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/VehicleController.cs">
     <Files>
-      <File FileName="Assets/Scripts/GenerateOrchard.cs" Line="38" Column="6" />
-      <File FileName="Assets/Scripts/DoorController.cs" Line="25" Column="61" />
+      <File FileName="Assets/Scripts/GenerateOrchard.cs" Line="57" Column="2" />
+      <File FileName="Assets/Scripts/DoorController.cs" />
+      <File FileName="Assets/Scripts/LampController.cs" Line="6" Column="47" />
+      <File FileName="Assets/Scripts/VehicleController.cs" Line="11" Column="39" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -23,4 +19,10 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="86a37382-2eeb-4bd6-b0f4-f368554475ba" />
 </Properties>

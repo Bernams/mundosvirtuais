@@ -7,13 +7,13 @@ public class VehicleController : MonoBehaviour
 {
     public WheelCollider[] wheelColliders;
     public Transform[] wheelMeshes;
-    public float maxMotorTorque = 200f;
-    public float maxSteeringAngle = 30f;
-    public float maxSpeed = 50f;
-    public float decelerationForce = 15f;
-    public float antiRollForce = 10000f;
-    //public float centerOfMassY = -1.0f;
-    public float brakePower;
+    public float maxMotorTorque = 250;
+    public float maxSteeringAngle = 20;
+    public float maxSpeed = 10;
+    public float decelerationForce = 10;
+    public float antiRollForce = 10;
+    public float centerOfMassY = -10.0f;
+    public float brakePower = 1000;
     
     public CinemachineVirtualCamera cam;
 
