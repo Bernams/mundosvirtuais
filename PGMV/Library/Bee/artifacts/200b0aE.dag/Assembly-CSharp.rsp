@@ -359,7 +359,6 @@
 "Assets/Scripts/DayNightCycle.cs"
 "Assets/Scripts/DoorController.cs"
 "Assets/Scripts/FurnitureGenerator.cs"
-"Assets/Scripts/FurnitureGeneratorV2.cs"
 "Assets/Scripts/GenerateOrchard.cs"
 "Assets/Scripts/LampController.cs"
 "Assets/Scripts/Moon_Controller.cs"
