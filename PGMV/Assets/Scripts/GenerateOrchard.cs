@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GenerateOrchard : MonoBehaviour
 {
-    public int depth = 5;
+    public float depth = 5f;
     public int width = 50;
     public int height = 50;
 
@@ -52,6 +52,6 @@ public class GenerateOrchard : MonoBehaviour
         float xx = (float) x / width * scale;
         float yy = (float) y / height * scale;
 
-        return Mathf.PerlinNoise(xx, yy);
+        return Mathf.PerlinNoise(xx, yy) + 0.4f * Mathf.PerlinNoise(10 * xx, 10 * yy);
     }
 }
