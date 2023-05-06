@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class FurnitureGenerator : MonoBehaviour
 {
-    public float maxX;
-    public float minX;
-    public float maxZ;
-    public float minZ;
+    public List<GameObject> furniturePositions;
+    public List<GameObject> furniturePrefabs;
+    public float positionInterval = 2f;
     public float maxYRotation;
-    public float minYRotation;
 
     private GameObject garage;
 
@@ -17,14 +15,23 @@ public class FurnitureGenerator : MonoBehaviour
     {
         garage = GameObject.Find("Garage");
 
-        float randomX = Random.Range(minX, maxX);
-        float randomZ = Random.Range(minZ, maxZ);
-        float randomYRotation = Random.Range(minYRotation, maxYRotation);
+        for (int i = 0; i < furniturePositions.Count; i++)
+        {
+            GameObject positionObject = furniturePositions[i];
+            GameObject prefab = furniturePrefabs[i];
 
-        Vector3 randomPosition = transform.position + new Vector3(randomX, 0, randomZ);
-        Quaternion randomRotation = Quaternion.Euler(garage.transform.rotation.x,
-            garage.transform.rotation.y + randomYRotation,
-            garage.transform.rotation.z);
-        transform.SetPositionAndRotation(randomPosition, randomRotation);
+            float randomX = Random.Range(-positionInterval, positionInterval);
+            float randomZ = Random.Range(-positionInterval, positionInterval);
+            float randomYRotation = Random.Range(-maxYRotation, maxYRotation);
+
+            Vector3 randomPosition = positionObject.transform.position + new Vector3(randomX, 0, randomZ);
+            Quaternion randomRotation = Quaternion.Euler(
+                garage.transform.rotation.x,
+                positionObject.transform.rotation.y + randomYRotation,
+                garage.transform.rotation.z);
+
+            GameObject instantiatedPrefab = Instantiate(prefab, randomPosition, randomRotation);
+            instantiatedPrefab.transform.parent = positionObject.transform;
+        }
     }
 }
