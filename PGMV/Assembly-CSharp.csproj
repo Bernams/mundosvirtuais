@@ -72,6 +72,7 @@
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_CamNav.cs" />
     <Compile Include="Assets/Scripts/SetCamera.cs" />
     <Compile Include="Assets/Scripts/GenerateOrchard.cs" />
+    <Compile Include="Assets/Grass And Flowers Pack 1/Example Scene/SimpleTextureDrawing.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/CTI_LOD_Bark_Array_301.shader" />
@@ -91,6 +92,7 @@
     <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/CTI_LOD_Leaves_301.shader" />
     <None Include="Assets/AQUAS-Lite/Shaders/AQUAS-Lite_Backface.shader" />
     <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/Includes/CTI_Builtin4xTreeLibraryTumbling_301.cginc" />
+    <None Include="Assets/Grass And Flowers Pack 1/Example Scene/Skyboxes/_skybox info.txt" />
     <None Include="Assets/Ultra Skybox Fog/Shaders/UltraSkyboxFog.shader" />
     <None Include="Assets/Ultra Skybox Fog/Manual.txt" />
   </ItemGroup>
