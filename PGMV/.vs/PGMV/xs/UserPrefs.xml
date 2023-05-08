@@ -1,11 +1,13 @@
 ﻿<Properties StartupConfiguration="{CD44F808-013C-553B-A578-FC6931A27E08}|">
-  <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/VehicleController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Conifers [BOTD]/Getting started.txt">
     <Files>
-      <File FileName="Assets/Scripts/GenerateOrchard.cs" Line="57" Column="2" />
+      <File FileName="Assets/Scripts/GenerateOrchard.cs" Line="55" Column="71" />
       <File FileName="Assets/Scripts/DoorController.cs" />
-      <File FileName="Assets/Scripts/LampController.cs" Line="6" Column="47" />
-      <File FileName="Assets/Scripts/VehicleController.cs" Line="11" Column="39" />
+      <File FileName="Assets/Scripts/LampController.cs" />
+      <File FileName="Assets/Scripts/VehicleController.cs" />
+      <File FileName="Assets/Scripts/FurnitureGenerator.cs" Line="38" Column="1" />
+      <File FileName="Assets/Scripts/MinimapCameraFollow.cs" Line="11" Column="6" />
+      <File FileName="Assets/Conifers [BOTD]/Getting started.txt" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -22,7 +24,8 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="a8af30c4-9d82-4202-8a53-92be7cf0ce6c" />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="86a37382-2eeb-4bd6-b0f4-f368554475ba" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
 </Properties>

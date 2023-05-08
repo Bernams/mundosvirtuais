@@ -57,25 +57,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Reflection.cs" />
+    <Compile Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Scripts/CTI_CustomWind.cs" />
     <Compile Include="Assets/Scripts/DayNightCycle.cs" />
     <Compile Include="Assets/Scripts/VehicleController.cs" />
     <Compile Include="Assets/Scripts/NewDayNightCycle.cs" />
+    <Compile Include="Assets/Scripts/MinimapCameraFollow.cs" />
     <Compile Include="Assets/Scripts/FurnitureGenerator.cs" />
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Camera.cs" />
     <Compile Include="Assets/Scripts/LampController.cs" />
+    <Compile Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Scripts/CTI_Utils.cs" />
     <Compile Include="Assets/Scripts/PlayerController.cs" />
     <Compile Include="Assets/Scripts/DoorController.cs" />
     <Compile Include="Assets/Scripts/Moon_Controller.cs" />
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_CamNav.cs" />
     <Compile Include="Assets/Scripts/SetCamera.cs" />
     <Compile Include="Assets/Scripts/GenerateOrchard.cs" />
-    <Compile Include="Assets/Scripts/MinimapCameraFollow.cs" />
+    <Compile Include="Assets/Grass And Flowers Pack 1/Example Scene/SimpleTextureDrawing.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/CTI_LOD_Bark_Array_301.shader" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/CTI_LOD_Billboard_301.shader" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Resources/CTI_Camera-DepthNormalTexture_301.shader" />
+    <None Include="Assets/Conifers [BOTD]/Conifers [BOTD] URP Readme.txt" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Resources/CTI_Internal-DeferredShading.shader" />
     <None Include="Assets/AQUAS-Lite/Shaders/AQUAS-Lite_Frontface.shader" />
+    <None Include="Assets/Conifers [BOTD]/Getting started.txt" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/Includes/CTI_BillboardVertex_301.cginc" />
     <None Include="Assets/AQUAS-Lite/Readme.txt" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/Includes/CTI_TranslucentLighting_301.cginc" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/CTI_LOD_Bark_301.shader" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Resources/CTI_Internal-DeferredReflections.shader" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/Includes/CTI_indirect.cginc" />
     <None Include="Assets/Ultra Skybox Fog/Textures/Readme.txt" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/CTI_LOD_Leaves_301.shader" />
     <None Include="Assets/AQUAS-Lite/Shaders/AQUAS-Lite_Backface.shader" />
+    <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/Includes/CTI_Builtin4xTreeLibraryTumbling_301.cginc" />
+    <None Include="Assets/Grass And Flowers Pack 1/Example Scene/Skyboxes/_skybox info.txt" />
     <None Include="Assets/Ultra Skybox Fog/Shaders/UltraSkyboxFog.shader" />
     <None Include="Assets/Ultra Skybox Fog/Manual.txt" />
   </ItemGroup>
