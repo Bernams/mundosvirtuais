@@ -7,9 +7,13 @@ public class VehicleController : MonoBehaviour
 {
     public WheelCollider[] wheelColliders;
     public Transform[] wheelMeshes;
+    public Light Leftheadlight;
+    public Light Rightheadlight;
     public float maxMotorTorque = 250;
+    public float maxMotorTorqueTurbo = 500;
     public float maxSteeringAngle = 20;
-    public float maxSpeed = 10;
+    public float maxSpeedKPH = 60;
+    public float maxTurboSpeedKPH = 120;
     public float decelerationForce = 10;
     public float antiRollForce = 10;
     public float centerOfMassY = -10.0f;
@@ -20,6 +24,7 @@ public class VehicleController : MonoBehaviour
     private Rigidbody rb;
     private bool changedCam = false;
     private bool grounded = false;
+    private bool lightsOn = false;
 
     private void Start()
     {
@@ -30,7 +35,9 @@ public class VehicleController : MonoBehaviour
 
     private void Update()
     {
+        bool changeLights = Input.GetKeyDown(KeyCode.L);
         UpdateWheelMeshesPositions();
+        ChangeLights(changeLights);
     }
 
     private void FixedUpdate()
@@ -38,15 +45,16 @@ public class VehicleController : MonoBehaviour
         float motorInput = Input.GetAxis("Vertical");
         float steeringInput = Input.GetAxis("Horizontal");
         bool braking = Input.GetKey(KeyCode.Space);
+        bool isTurbo = Input.GetKey(KeyCode.LeftShift);
 
-
-        Drive(motorInput);
+        Drive(motorInput, isTurbo);
         Steer(steeringInput);
         DecelerateWhenNoInput(motorInput);
         ApplyAntiRollForce();
         float brakeForce = braking ? brakePower : 0f;
         ApplyBraking(braking, brakeForce);
         UnflipCar();
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -54,6 +62,25 @@ public class VehicleController : MonoBehaviour
         if (other.CompareTag("Garage") && !changedCam){
             cam.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance = 4;
             changedCam = true;
+        }
+    }
+
+    private void ChangeLights(bool changeLights)
+    {
+        if (changeLights)
+        {
+            if (lightsOn)
+            {
+                lightsOn = false;
+                Leftheadlight.intensity = 0f;
+                Rightheadlight.intensity = 0f;
+            }
+            else
+            {
+                lightsOn = true;
+                Leftheadlight.intensity = 3f;
+                Rightheadlight.intensity = 3f;
+            }
         }
     }
 
@@ -67,15 +94,39 @@ public class VehicleController : MonoBehaviour
 
 
 
-    private void Drive(float input)
+    private void Drive(float input, bool isTurbo)
     {
-        if (rb.velocity.magnitude < maxSpeed)
+
+        float speed;
+        float torque;
+
+        if (isTurbo)
         {
-            float motorTorque = input * maxMotorTorque;
+            speed = maxTurboSpeedKPH;
+            torque = maxMotorTorqueTurbo;
+        }
+        else
+        {
+            speed = maxSpeedKPH;
+            torque = maxMotorTorque;
+        }
+
+        //Debug.Log(torque);
+
+        if (rb.velocity.magnitude < speed / 3.6f)
+        {
+            float motorTorque;
+            
+            motorTorque = input * torque;
+            
             foreach (WheelCollider wheel in wheelColliders)
             {
                 wheel.motorTorque = motorTorque;
             }
+        }
+        else
+        {
+            rb.velocity = rb.velocity.normalized * speed/3.6f;
         }
     }
 
@@ -88,6 +139,7 @@ public class VehicleController : MonoBehaviour
 
     private void DecelerateWhenNoInput(float motorInput)
     {
+
         if (Mathf.Abs(motorInput) < 0.1f)
         {
             foreach (WheelCollider wheel in wheelColliders)
