@@ -10,12 +10,12 @@ public class MinimapCameraFollow : MonoBehaviour
     void Start()
     {
         playerTransform = player.transform;
-        transform.position = new Vector3(playerTransform.position.x, height, playerTransform.position.z);
+        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y + height, playerTransform.position.z);
         transform.rotation = Quaternion.Euler(90f, playerTransform.rotation.eulerAngles.y, 0f);
     }
 
-    void LateUpdate()
+    void Update()
     {
-        transform.position = new Vector3(playerTransform.position.x, height, playerTransform.position.z);
+        transform.position = new Vector3(playerTransform.position.x, playerTransform.position.y + height, playerTransform.position.z);
     }
 }

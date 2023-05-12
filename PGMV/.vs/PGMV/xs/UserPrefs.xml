@@ -1,21 +1,19 @@
 ﻿<Properties StartupConfiguration="{CD44F808-013C-553B-A578-FC6931A27E08}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Conifers [BOTD]/Getting started.txt">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SetNavAgentToGarage.cs">
     <Files>
       <File FileName="Assets/Scripts/GenerateOrchard.cs" Line="55" Column="71" />
       <File FileName="Assets/Scripts/DoorController.cs" />
       <File FileName="Assets/Scripts/LampController.cs" />
       <File FileName="Assets/Scripts/VehicleController.cs" />
-      <File FileName="Assets/Scripts/FurnitureGenerator.cs" Line="38" Column="1" />
-      <File FileName="Assets/Scripts/MinimapCameraFollow.cs" Line="11" Column="6" />
-      <File FileName="Assets/Conifers [BOTD]/Getting started.txt" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/FurnitureGenerator.cs" Line="9" Column="38" />
+      <File FileName="Assets/Scripts/MinimapCameraFollow.cs" Line="13" Column="99" />
+      <File FileName="Assets/Scripts/SetNavAgentToGarage.cs" Line="35" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="PGMV" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True" />
-            </Node>
+            <Node name="Assets" expanded="True" />
           </Node>
         </State>
       </Pad>

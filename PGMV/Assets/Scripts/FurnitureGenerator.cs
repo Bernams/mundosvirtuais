@@ -6,7 +6,7 @@ public class FurnitureGenerator : MonoBehaviour
 {
     public List<GameObject> furniturePositions;
     public List<GameObject> furniturePrefabs;
-    public float positionInterval = 2f;
+    public float positionInterval = 1f;
     public float maxYRotation;
 
     private GameObject garage;
