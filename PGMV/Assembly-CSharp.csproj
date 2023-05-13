@@ -77,7 +77,9 @@
     <Compile Include="Assets/Scripts/GenerateOrchard.cs" />
     <Compile Include="Assets/Grass And Flowers Pack 1/Example Scene/SimpleTextureDrawing.cs" />
     <Compile Include="Assets/Scripts/BoxSpawner.cs" />
-    <Compile Include="Assets/BoxController.cs" />
+    <Compile Include="Assets/Scripts/BoxController.cs" />
+    <Compile Include="Assets/Scripts/BoxCollector.cs" />
+    <Compile Include="Assets/Scripts/BoxMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/CTI_LOD_Bark_Array_301.shader" />

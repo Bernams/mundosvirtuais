@@ -4,16 +4,14 @@ using UnityEngine;
 
 public class BoxController : MonoBehaviour
 {
+    public BoxMessage boxMessage;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            DestroyBox();
+            boxMessage.CatchBox();
+            Destroy(gameObject);
         }
-    }
-
-    private void DestroyBox()
-    {
-        Destroy(gameObject);
     }
 }
