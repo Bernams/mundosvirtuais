@@ -22,7 +22,7 @@ public class BoxMessage : MonoBehaviour
 
     public void CatchBox()
     {
-        messageText.text = messageText.text + "\n\nCaixa apanhada";
+        messageText.text = "Caixa apanhada\n\n" + messageText.text;
         hasBox = true;
     }
 
