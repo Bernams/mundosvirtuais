@@ -20,6 +20,7 @@ public class VehicleController : MonoBehaviour
     public float brakePower = 1000;
     
     public CinemachineVirtualCamera cam;
+    public GameTimer gameTimer;
 
     private Rigidbody rb;
     private bool changedCam = false;
@@ -42,19 +43,27 @@ public class VehicleController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float motorInput = Input.GetAxis("Vertical");
-        float steeringInput = Input.GetAxis("Horizontal");
-        bool braking = Input.GetKey(KeyCode.Space);
-        bool isTurbo = Input.GetKey(KeyCode.LeftShift);
+        {
+            if (gameTimer.isTimerRunning)
+            {
+                float motorInput = Input.GetAxis("Vertical");
+                float steeringInput = Input.GetAxis("Horizontal");
+                bool braking = Input.GetKey(KeyCode.Space);
+                bool isTurbo = Input.GetKey(KeyCode.LeftShift);
 
-        Drive(motorInput, isTurbo);
-        Steer(steeringInput);
-        DecelerateWhenNoInput(motorInput);
-        ApplyAntiRollForce();
-        float brakeForce = braking ? brakePower : 0f;
-        ApplyBraking(braking, brakeForce);
-        UnflipCar();
-
+                Drive(motorInput, isTurbo);
+                Steer(steeringInput);
+                DecelerateWhenNoInput(motorInput);
+                ApplyAntiRollForce();
+                float brakeForce = braking ? brakePower : 0f;
+                ApplyBraking(braking, brakeForce);
+                UnflipCar();
+            }
+            else
+            {
+                rb.velocity = Vector3.zero;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -110,8 +119,6 @@ public class VehicleController : MonoBehaviour
             speed = maxSpeedKPH;
             torque = maxMotorTorque;
         }
-
-        //Debug.Log(torque);
 
         if (rb.velocity.magnitude < speed / 3.6f)
         {

@@ -10,6 +10,6 @@ public class PlayerController : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         UnityEngine.Vector3 moveDirection = new UnityEngine.Vector3(horizontalInput, 0f, verticalInput).normalized;
-        transform.position += moveDirection * moveSpeed * Time.deltaTime;
+        transform.position += moveSpeed * Time.deltaTime * moveDirection;
     }
 }

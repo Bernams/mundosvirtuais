@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_Reflection.cs" />
     <Compile Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Scripts/CTI_CustomWind.cs" />
+    <Compile Include="Assets/Scripts/GameTimer.cs" />
     <Compile Include="Assets/Scripts/SetNavAgentToGarage.cs" />
     <Compile Include="Assets/Scripts/DayNightCycle.cs" />
     <Compile Include="Assets/Scripts/VehicleController.cs" />
@@ -75,6 +76,10 @@
     <Compile Include="Assets/Scripts/SetCamera.cs" />
     <Compile Include="Assets/Scripts/GenerateOrchard.cs" />
     <Compile Include="Assets/Grass And Flowers Pack 1/Example Scene/SimpleTextureDrawing.cs" />
+    <Compile Include="Assets/Scripts/BoxSpawner.cs" />
+    <Compile Include="Assets/Scripts/BoxController.cs" />
+    <Compile Include="Assets/Scripts/BoxCollector.cs" />
+    <Compile Include="Assets/Scripts/BoxMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/CTI_LOD_Bark_Array_301.shader" />
