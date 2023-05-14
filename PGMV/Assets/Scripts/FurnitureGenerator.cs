@@ -13,25 +13,57 @@ public class FurnitureGenerator : MonoBehaviour
 
     void Start()
     {
-        garage = GameObject.Find("Garage");
+        garage = this.gameObject;
+        Bounds garageBounds = garage.transform.Find("SpawnLimits").gameObject.GetComponent<BoxCollider>().bounds;
 
         for (int i = 0; i < furniturePositions.Count; i++)
         {
             GameObject positionObject = furniturePositions[i];
             GameObject prefab = furniturePrefabs[i];
 
-            float randomX = Random.Range(-positionInterval, positionInterval);
-            float randomZ = Random.Range(-positionInterval, positionInterval);
-            float randomYRotation = Random.Range(-maxYRotation, maxYRotation);
+            Bounds prefabBounds = GetPrefabBounds(prefab);
 
-            Vector3 randomPosition = positionObject.transform.position + new Vector3(randomX, 0, randomZ);
-            Quaternion randomRotation = Quaternion.Euler(
-                garage.transform.rotation.x,
-                positionObject.transform.rotation.y + randomYRotation,
-                garage.transform.rotation.z);
+            //int count = 1000;
 
-            GameObject instantiatedPrefab = Instantiate(prefab, randomPosition, randomRotation);
-            instantiatedPrefab.transform.parent = positionObject.transform;
+            while (true)
+            {
+                float randomX = Random.Range(-positionInterval, positionInterval);
+                float randomZ = Random.Range(-positionInterval, positionInterval);
+                float randomYRotation = Random.Range(-maxYRotation, maxYRotation);
+
+                Vector3 randomPosition = positionObject.transform.position + new Vector3(randomX, 0, randomZ);
+                Quaternion randomRotation = Quaternion.Euler(
+                    garage.transform.rotation.x,
+                    positionObject.transform.rotation.y + randomYRotation,
+                    garage.transform.rotation.z);
+
+                GameObject instantiatedPrefab = Instantiate(prefab, randomPosition, randomRotation);
+                instantiatedPrefab.transform.parent = positionObject.transform;
+
+                if (garageBounds.Contains(prefabBounds.min + randomPosition - prefab.transform.position) &&
+                    garageBounds.Contains(prefabBounds.max + randomPosition - prefab.transform.position))
+                {
+                    Debug.Log("Hehe");
+                    break;
+                }
+                Destroy(instantiatedPrefab);
+                //count--;
+                //Debug.Log(count);
+            }
         }
     }
+
+    private Bounds GetPrefabBounds(GameObject prefab)
+    {
+        Bounds bounds = new Bounds(prefab.transform.position, Vector3.zero);
+
+        Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in renderers)
+        {
+            bounds.Encapsulate(renderer.bounds);
+        }
+
+        return bounds;
+    }
+
 }
