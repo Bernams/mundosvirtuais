@@ -1704,6 +1704,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pomar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7206119870094310885, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
+      propertyPath: tree
+      value: 
+      objectReference: {fileID: 122562, guid: 13f6097cdfae79d44acca4175298212a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
 --- !u!146 &524714168 stripped
@@ -5109,5 +5113,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pomar
       objectReference: {fileID: 0}
+    - target: {fileID: 7206119870094310885, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
+      propertyPath: tree
+      value: 
+      objectReference: {fileID: 122562, guid: 13f6097cdfae79d44acca4175298212a, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
