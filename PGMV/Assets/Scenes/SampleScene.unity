@@ -1707,7 +1707,11 @@ PrefabInstance:
     - target: {fileID: 7206119870094310885, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
       propertyPath: tree
       value: 
-      objectReference: {fileID: 122562, guid: 13f6097cdfae79d44acca4175298212a, type: 3}
+      objectReference: {fileID: 7845294452059093364, guid: b6348778434e88ef1bafee27954dac05, type: 3}
+    - target: {fileID: 7206119870094310885, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
+      propertyPath: treeOffsetY
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
 --- !u!146 &524714168 stripped
@@ -5022,6 +5026,66 @@ Transform:
   m_Father: {fileID: 1460004099}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -31, z: 0}
+--- !u!1 &1945312440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1945312442}
+  - component: {fileID: 1945312441}
+  - component: {fileID: 1945312443}
+  m_Layer: 0
+  m_Name: WindZone
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!182 &1945312441
+WindZone:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945312440}
+  m_Enabled: 1
+  m_Mode: 0
+  m_Radius: 20
+  m_WindMain: 1
+  m_WindTurbulence: 0.1
+  m_WindPulseMagnitude: 0.8
+  m_WindPulseFrequency: 0.5
+--- !u!4 &1945312442
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945312440}
+  m_LocalRotation: {x: -0, y: 0.6126408, z: -0, w: 0.7903615}
+  m_LocalPosition: {x: 82.28, y: 27.44, z: -634.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 75.561, z: 0}
+--- !u!114 &1945312443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1945312440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1edb39aa169eb40cfa015393d5396847, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WindMultiplier: 1
 --- !u!1 &1950907986
 GameObject:
   m_ObjectHideFlags: 0
@@ -5116,6 +5180,10 @@ PrefabInstance:
     - target: {fileID: 7206119870094310885, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
       propertyPath: tree
       value: 
-      objectReference: {fileID: 122562, guid: 13f6097cdfae79d44acca4175298212a, type: 3}
+      objectReference: {fileID: 7845294452059093364, guid: b6348778434e88ef1bafee27954dac05, type: 3}
+    - target: {fileID: 7206119870094310885, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
+      propertyPath: treeOffsetY
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2ee5fa96be502b40be0884771b71c40, type: 3}
