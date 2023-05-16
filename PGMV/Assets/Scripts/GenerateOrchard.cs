@@ -43,26 +43,31 @@ public class GenerateOrchard : MonoBehaviour
             {
                 float randomRotation = Random.Range(0f, 360f);
                 float randomScale = Random.Range(treeScaleMin, treeScaleMax);
-                Vector3 randomPosition = new Vector3(col * treePlacementIntervalX + orchard.transform.position.x, orchard.transform.position.y, row * treePlacementIntervalY + orchard.transform.position.z);
-
-                Debug.Log(randomPosition);
-
-                // Adjust tree position to prevent clipping with the terrain
-                float sampleHeight = orchard.SampleHeight(randomPosition);
-                randomPosition.y = sampleHeight + treeOffsetY;
-                Vector3 raycastOrigin = new Vector3(randomPosition.x, sampleHeight + 1f, randomPosition.z);
-                RaycastHit hit;
-                if (Physics.Raycast(raycastOrigin, Vector3.down, out hit, 10f))
-                {
-                    float distanceToGround = hit.distance;
-                    randomPosition.y += distanceToGround;
-                }
-
-                Debug.Log(randomPosition);
+                Vector3 randomPosition = new Vector3(col * treePlacementIntervalX + orchard.transform.position.x, 0f, row * treePlacementIntervalY + orchard.transform.position.z);
 
                 GameObject instantiatedTree = Instantiate(tree, randomPosition, Quaternion.Euler(0f, randomRotation, 0f));
                 instantiatedTree.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
                 instantiatedTree.transform.parent = transform;
+
+                float targetHeight = orchard.SampleHeight(randomPosition);
+
+                instantiatedTree.transform.localPosition = new Vector3(instantiatedTree.transform.localPosition.x, targetHeight, instantiatedTree.transform.localPosition.z);
+                Debug.Log(randomPosition);
+
+                // Adjust tree position to prevent clipping with the terrain
+                //float sampleHeight = orchard.SampleHeight(randomPosition);
+                //randomPosition.y = sampleHeight;
+                //Vector3 raycastOrigin = new Vector3(randomPosition.x, sampleHeight + 0.5f, randomPosition.z);
+                //RaycastHit hit;
+                //if (Physics.Raycast(raycastOrigin, Vector3.down, out hit, 10f))
+                //{
+                //    float distanceToGround = hit.distance;
+                //    randomPosition.y += distanceToGround + treeOffsetY;
+                //}
+
+                Debug.Log(randomPosition);
+
+                
             }
         }
     }
@@ -83,9 +88,18 @@ public class GenerateOrchard : MonoBehaviour
         float[,] heights = new float[width, height];
         for (int x = 0; x < width; x++)
         {
-            for(int y = 0; y < height; y++)
+            for (int y = 0; y < height; y++)
             {
-                heights[x, y] = GeneratePerlinNoise(x, y);
+                float randomHeight = GeneratePerlinNoise(x, y);
+                heights[x, y] = randomHeight;
+                //if (x % (width / numberOfColumnsInGrid) == 0 && y % (height / numberOfRowsInGrid) == 0)
+                //{
+                  //  float randomRotation = Random.Range(0f, 360f);
+                    //float randomScale = Random.Range(treeScaleMin, treeScaleMax);
+                    //GameObject instantiatedTree = Instantiate(tree, new Vector3(orchard.transform.position.x + x, orchard.transform.position.y + randomHeight, orchard.transform.position.z + y), Quaternion.Euler(0f, randomRotation, 0f));
+                    //instantiatedTree.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+                    //instantiatedTree.transform.parent = transform;
+                //}
             }
         }
         return heights;
