@@ -6,6 +6,7 @@ using UnityEngine;
 public class BoxCollector : MonoBehaviour
 {
     public BoxMessage boxMessage;
+    public BoxSpawner boxSpawner;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,6 +15,7 @@ public class BoxCollector : MonoBehaviour
             if (boxMessage.HasBox())
             {
                 boxMessage.DepositBox();
+                boxSpawner.SpawnBox();
             }
         }
     }

@@ -43,12 +43,9 @@ public class FurnitureGenerator : MonoBehaviour
                 if (garageBounds.Contains(prefabBounds.min + randomPosition - prefab.transform.position) &&
                     garageBounds.Contains(prefabBounds.max + randomPosition - prefab.transform.position))
                 {
-                    Debug.Log("Hehe");
                     break;
                 }
                 Destroy(instantiatedPrefab);
-                //count--;
-                //Debug.Log(count);
             }
         }
     }
