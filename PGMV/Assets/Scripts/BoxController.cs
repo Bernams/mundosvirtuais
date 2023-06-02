@@ -8,7 +8,6 @@ public class BoxController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
         if (collision.gameObject.CompareTag("Player"))
         {
             boxMessage.CatchBox();

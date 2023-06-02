@@ -19,11 +19,10 @@ public class BoxSpawner : MonoBehaviour
         SpawnBox();
     }
 
-    private void SpawnBox()
+    public void SpawnBox()
     {
         Vector3 spawnPosition;
         bool foundValidPosition = false;
-        int count = 0;
 
         while (!foundValidPosition)
         {
@@ -32,7 +31,6 @@ public class BoxSpawner : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(spawnPosition + Vector3.up * dropHeight, Vector3.down, out hit, Mathf.Infinity, obstacleLayerMask))
             {
-                Debug.Log(count);
                 foundValidPosition = true;
                 GameObject box = Instantiate(boxPrefab, spawnPosition + Vector3.up * dropHeight, Quaternion.identity);
 
@@ -41,7 +39,6 @@ public class BoxSpawner : MonoBehaviour
                     boxController.boxMessage = boxMessage;
                 }
             }
-            count++;
         }
     }
 

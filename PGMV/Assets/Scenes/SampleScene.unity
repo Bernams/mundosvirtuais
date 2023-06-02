@@ -939,6 +939,10 @@ PrefabInstance:
       propertyPath: boxMessage
       value: 
       objectReference: {fileID: 375364187}
+    - target: {fileID: 1047433366052409503, guid: 047831ebe785d441d95ce05a2758e748, type: 3}
+      propertyPath: boxSpawner
+      value: 
+      objectReference: {fileID: 876174146}
     - target: {fileID: 1247236457458795516, guid: 047831ebe785d441d95ce05a2758e748, type: 3}
       propertyPath: dayNightCycle
       value: 
