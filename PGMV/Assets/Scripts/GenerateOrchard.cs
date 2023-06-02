@@ -10,10 +10,15 @@ public class GenerateOrchard : MonoBehaviour
     public float treeScaleMin = 0.5f;
     public float treeScaleMax = 1.5f;
     public float treeOffsetY = 0.1f;
-    public int numberOfRowsInGrid = 10;
-    public int numberOfColumnsInGrid = 10;
+    public int numberOfRowsInGrid = 4;
+    public int numberOfColumnsInGrid = 4;
+    public int numberOfRocks = 15;
+    public int numberOfBushes = 15;
+    public LayerMask collisionLayer;
 
     public GameObject tree;
+    public GameObject bush;
+    public GameObject rock;
 
     public float scale = 20f;
 
@@ -24,12 +29,57 @@ public class GenerateOrchard : MonoBehaviour
         orchard = GetComponent<Terrain>();
         orchard.terrainData = OrchardGenerator(orchard.terrainData);
         GenerateTrees();
+        GenerateRocksAndBushes();
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
+    }
+
+    private void GenerateRocksAndBushes()
+    {
+        for (int i = 0; i < numberOfRocks; i++)
+        {
+            bool isInstantiated = false;
+            while (!isInstantiated)
+            {
+                float randomRotation = Random.Range(0f, 360f);
+                Vector3 randomPosition = new Vector3(Random.Range(0f, width) + orchard.transform.position.x, 0f, Random.Range(0f, height) + orchard.transform.position.z);
+
+                Collider[] colliders = Physics.OverlapBox(randomPosition, rock.transform.localScale / 2f, Quaternion.identity, collisionLayer);
+                if (colliders.Length == 0)
+                {
+                    GameObject instantiatedRock = Instantiate(rock, randomPosition, Quaternion.Euler(0f, randomRotation, 0f));
+                    instantiatedRock.transform.parent = transform;
+                    float targetHeight = orchard.SampleHeight(randomPosition);
+
+                    instantiatedRock.transform.localPosition = new Vector3(instantiatedRock.transform.localPosition.x, targetHeight, instantiatedRock.transform.localPosition.z);
+                    isInstantiated = true;
+                }
+            }
+        }
+        for (int i = 0; i < numberOfBushes; i++)
+        {
+            bool isInstantiated = false;
+            while (!isInstantiated)
+            {
+                float randomRotation = Random.Range(0f, 360f);
+                Vector3 randomPosition = new Vector3(Random.Range(0f, width) + orchard.transform.position.x, 0f, Random.Range(0f, height) + orchard.transform.position.z);
+
+                Collider[] colliders = Physics.OverlapBox(randomPosition, rock.transform.localScale / 2f, Quaternion.identity, collisionLayer);
+                if (colliders.Length == 0)
+                {
+                    GameObject instantiatedBush = Instantiate(bush, randomPosition, Quaternion.Euler(0f, randomRotation, 0f));
+                    instantiatedBush.transform.parent = transform;
+                    float targetHeight = orchard.SampleHeight(randomPosition);
+
+                    instantiatedBush.transform.localPosition = new Vector3(instantiatedBush.transform.localPosition.x, targetHeight, instantiatedBush.transform.localPosition.z);
+                    isInstantiated = true;
+                }
+            }
+        }
     }
 
     private void GenerateTrees()
@@ -78,11 +128,11 @@ public class GenerateOrchard : MonoBehaviour
                 heights[x, y] = randomHeight;
                 //if (x % (width / numberOfColumnsInGrid) == 0 && y % (height / numberOfRowsInGrid) == 0)
                 //{
-                  //  float randomRotation = Random.Range(0f, 360f);
-                    //float randomScale = Random.Range(treeScaleMin, treeScaleMax);
-                    //GameObject instantiatedTree = Instantiate(tree, new Vector3(orchard.transform.position.x + x, orchard.transform.position.y + randomHeight, orchard.transform.position.z + y), Quaternion.Euler(0f, randomRotation, 0f));
-                    //instantiatedTree.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
-                    //instantiatedTree.transform.parent = transform;
+                //  float randomRotation = Random.Range(0f, 360f);
+                //float randomScale = Random.Range(treeScaleMin, treeScaleMax);
+                //GameObject instantiatedTree = Instantiate(tree, new Vector3(orchard.transform.position.x + x, orchard.transform.position.y + randomHeight, orchard.transform.position.z + y), Quaternion.Euler(0f, randomRotation, 0f));
+                //instantiatedTree.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
+                //instantiatedTree.transform.parent = transform;
                 //}
             }
         }
@@ -91,8 +141,8 @@ public class GenerateOrchard : MonoBehaviour
 
     float GeneratePerlinNoise(int x, int y)
     {
-        float xx = (float) x / width * scale;
-        float yy = (float) y / height * scale;
+        float xx = (float)x / width * scale;
+        float yy = (float)y / height * scale;
 
         return Mathf.PerlinNoise(xx, yy) + 0.4f * Mathf.PerlinNoise(10 * xx, 10 * yy);
     }

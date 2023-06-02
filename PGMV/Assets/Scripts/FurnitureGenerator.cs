@@ -23,8 +23,6 @@ public class FurnitureGenerator : MonoBehaviour
 
             Bounds prefabBounds = GetPrefabBounds(prefab);
 
-            //int count = 1000;
-
             while (true)
             {
                 float randomX = Random.Range(-positionInterval, positionInterval);
