@@ -6,9 +6,10 @@ public class BoxController : MonoBehaviour
 {
     public BoxMessage boxMessage;
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.CompareTag("Player"))
+        Debug.Log(collision.gameObject.tag);
+        if (collision.gameObject.CompareTag("Player"))
         {
             boxMessage.CatchBox();
             Destroy(gameObject);

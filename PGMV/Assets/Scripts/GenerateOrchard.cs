@@ -52,22 +52,6 @@ public class GenerateOrchard : MonoBehaviour
                 float targetHeight = orchard.SampleHeight(randomPosition);
 
                 instantiatedTree.transform.localPosition = new Vector3(instantiatedTree.transform.localPosition.x, targetHeight, instantiatedTree.transform.localPosition.z);
-                Debug.Log(randomPosition);
-
-                // Adjust tree position to prevent clipping with the terrain
-                //float sampleHeight = orchard.SampleHeight(randomPosition);
-                //randomPosition.y = sampleHeight;
-                //Vector3 raycastOrigin = new Vector3(randomPosition.x, sampleHeight + 0.5f, randomPosition.z);
-                //RaycastHit hit;
-                //if (Physics.Raycast(raycastOrigin, Vector3.down, out hit, 10f))
-                //{
-                //    float distanceToGround = hit.distance;
-                //    randomPosition.y += distanceToGround + treeOffsetY;
-                //}
-
-                Debug.Log(randomPosition);
-
-                
             }
         }
     }
