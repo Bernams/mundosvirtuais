@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6709550391302854254}
   - component: {fileID: 4218414073868202561}
   - component: {fileID: 6593026684039667971}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: stone_01_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8243786766720177341}
   m_RootOrder: 2
@@ -93,7 +94,7 @@ GameObject:
   - component: {fileID: 5009626943453740795}
   - component: {fileID: 4012861211804574258}
   - component: {fileID: 174615998494776178}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: stone_01_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,6 +111,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8243786766720177341}
   m_RootOrder: 0
@@ -175,7 +177,7 @@ GameObject:
   - component: {fileID: 1430076359436936471}
   - component: {fileID: 7107012623397415029}
   - component: {fileID: 919913719391697151}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: stone_01_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -192,6 +194,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8243786766720177341}
   m_RootOrder: 1
@@ -257,7 +260,7 @@ GameObject:
   - component: {fileID: 5871295551043840613}
   - component: {fileID: 2478399957166719206}
   - component: {fileID: 9113838874434728199}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: stone_01_LOD3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,6 +277,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8243786766720177341}
   m_RootOrder: 3
@@ -338,7 +342,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8243786766720177341}
   - component: {fileID: 3764393331411559372}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: stone_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -354,7 +358,8 @@ Transform:
   m_GameObject: {fileID: 8731354669053136391}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5009626943453740795}
   - {fileID: 1430076359436936471}
