@@ -94,4 +94,17 @@ MonoBehaviour:
   depth: 1.2
   width: 64
   height: 64
+  treeScaleMin: 0.5
+  treeScaleMax: 1.5
+  treeOffsetY: 0.1
+  numberOfRowsInGrid: 4
+  numberOfColumnsInGrid: 4
+  numberOfRocks: 15
+  numberOfBushes: 15
+  collisionLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  tree: {fileID: 7845294452059093364, guid: b6348778434e88ef1bafee27954dac05, type: 3}
+  bush: {fileID: 7992715529498131577, guid: 0cc0db2b14252644da9f1f74ed0c8f90, type: 3}
+  rock: {fileID: 9029044742914748786, guid: ff3391404d125db49aebbd8c27d4572e, type: 3}
   scale: 10
