@@ -5,6 +5,7 @@ public class BoxSpawner : MonoBehaviour
 {
     public GameObject boxPrefab;
     public BoxMessage boxMessage;
+    public HintsGenerator hintsGenerator;
 
     public float minX;
     public float maxX;
@@ -24,12 +25,8 @@ public class BoxSpawner : MonoBehaviour
         Vector3 spawnPosition;
         bool foundValidPosition = false;
 
-        int count = 0;
         while (!foundValidPosition)
         {
-            count++;
-            Debug.Log(count);
-
             spawnPosition = GetRandomPosition();
             RaycastHit hit;
             if (!Physics.Raycast(spawnPosition + Vector3.up * dropHeight, Vector3.down, out hit, Mathf.Infinity, obstacleLayerMask))
@@ -41,11 +38,8 @@ public class BoxSpawner : MonoBehaviour
                 {
                     boxController.boxMessage = boxMessage;
                 }
-            }
 
-            if (count > 9999)
-            {
-                break;
+                hintsGenerator.setBox(box);
             }
         }
     }
