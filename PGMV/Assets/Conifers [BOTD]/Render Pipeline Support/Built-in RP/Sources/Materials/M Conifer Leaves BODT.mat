@@ -2,15 +2,21 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!21 &2100000
 Material:
-  serializedVersion: 6
+  serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M Conifer Leaves BODT
   m_Shader: {fileID: 4800000, guid: 6ae32366f15a64fc19f245f040af8f21, type: 3}
-  m_ShaderKeywords: GEOM_TYPE_LEAF _ALPHAPREMULTIPLY_ON _EMISSION _METALLICGLOSSMAP
-    _NORMALMAP _SPECULARHIGHLIGHTS_OFF
+  m_ValidKeywords:
+  - GEOM_TYPE_LEAF
+  - _EMISSION
+  - _METALLICGLOSSMAP
+  - _NORMALMAP
+  m_InvalidKeywords:
+  - _ALPHAPREMULTIPLY_ON
+  - _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
@@ -56,6 +62,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _GlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 5597dc21a8aed4e7ba2c0f93dc4b1d98, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -80,10 +90,15 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ShadowOffset:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _TranslucencyMap:
         m_Texture: {fileID: 2800000, guid: ca6a46a4d37514e00ae826202bad794e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    m_Ints: []
     m_Floats:
     - _AmbientTranslucency: 2
     - _AnimateNormal: 1
@@ -119,8 +134,10 @@ Material:
     - _OcclusionStrength: 1
     - _Parallax: 0.02
     - _ShadowCulling: 0
+    - _Shininess: 0.078125
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
+    - _SquashAmount: 1
     - _SrcBlend: 1
     - _SwapUVS: 0
     - _Tangents: 0
@@ -140,3 +157,6 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _HueVariation: {r: 0, g: 0.9, b: 0.8255172, a: 0.1}
+    - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
+    - _TreeInstanceScale: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
