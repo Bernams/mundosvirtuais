@@ -22,6 +22,15 @@ public class VehicleController : MonoBehaviour
     public CinemachineVirtualCamera cam;
     public GameTimer gameTimer;
 
+    public float minPitch = 0.5f;
+    public float maxPitch = 3f;
+    public float volume = 0.2f;
+    public AudioClip runningEngineSound;
+    public AudioClip idleEngineSound;
+    public AudioClip collisionSound;
+    public AudioSource collisionPlayer;
+
+    private AudioSource engineSound;
     private Rigidbody rb;
     private bool changedCam = false;
     private bool grounded = false;
@@ -29,6 +38,10 @@ public class VehicleController : MonoBehaviour
 
     private void Start()
     {
+        engineSound = GetComponent<AudioSource>();
+        engineSound.pitch = 1;
+        engineSound.volume = volume;
+        engineSound.Play();
         rb = GetComponent<Rigidbody>();
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.centerOfMass = new Vector3(rb.centerOfMass.x, 0.5f, 0.3f);
@@ -36,34 +49,28 @@ public class VehicleController : MonoBehaviour
 
     private void Update()
     {
+        if (gameTimer.isTimerRunning)
+        {
+            float motorInput = Input.GetAxis("Vertical");
+            float steeringInput = Input.GetAxis("Horizontal");
+            bool braking = Input.GetKey(KeyCode.Space);
+            bool isTurbo = Input.GetKey(KeyCode.LeftShift);
+
+            Drive(motorInput, isTurbo);
+            Steer(steeringInput);
+            DecelerateWhenNoInput(motorInput);
+            ApplyAntiRollForce();
+            float brakeForce = braking ? brakePower : 0f;
+            ApplyBraking(braking, brakeForce);
+            UnflipCar();
+        }
+        else
+        {
+            rb.velocity = Vector3.zero;
+        }
         bool changeLights = Input.GetKeyDown(KeyCode.L);
         UpdateWheelMeshesPositions();
         ChangeLights(changeLights);
-    }
-
-    private void FixedUpdate()
-    {
-        {
-            if (gameTimer.isTimerRunning)
-            {
-                float motorInput = Input.GetAxis("Vertical");
-                float steeringInput = Input.GetAxis("Horizontal");
-                bool braking = Input.GetKey(KeyCode.Space);
-                bool isTurbo = Input.GetKey(KeyCode.LeftShift);
-
-                Drive(motorInput, isTurbo);
-                Steer(steeringInput);
-                DecelerateWhenNoInput(motorInput);
-                ApplyAntiRollForce();
-                float brakeForce = braking ? brakePower : 0f;
-                ApplyBraking(braking, brakeForce);
-                UnflipCar();
-            }
-            else
-            {
-                rb.velocity = Vector3.zero;
-            }
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -101,10 +108,32 @@ public class VehicleController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        collisionPlayer.PlayOneShot(collisionSound);
+    }
+
 
 
     private void Drive(float input, bool isTurbo)
     {
+        if(rb.velocity.magnitude < 0.1)
+        {
+            engineSound.clip = idleEngineSound;
+            engineSound.pitch = 1;
+        }
+        else
+        {
+            engineSound.clip = runningEngineSound;
+            float speedRatio = rb.velocity.magnitude / (maxTurboSpeedKPH / 3.6f);
+            engineSound.pitch = Mathf.Lerp(minPitch, maxPitch, speedRatio);
+        }
+
+        if (!engineSound.isPlaying)
+        { 
+            engineSound.Play();
+        }
+
 
         float speed;
         float torque;
@@ -116,8 +145,16 @@ public class VehicleController : MonoBehaviour
         }
         else
         {
-            speed = maxSpeedKPH;
-            torque = maxMotorTorque;
+            if (rb.velocity.magnitude > maxSpeedKPH / 3.6f)
+            {
+                speed = maxTurboSpeedKPH;
+                torque = maxMotorTorque;
+            }
+            else
+            {
+                speed = maxSpeedKPH;
+                torque = maxMotorTorque;
+            }
         }
 
         if (rb.velocity.magnitude < speed / 3.6f)
@@ -152,6 +189,14 @@ public class VehicleController : MonoBehaviour
             foreach (WheelCollider wheel in wheelColliders)
             {
                 wheel.brakeTorque = decelerationForce;
+                if (Vector3.Dot(rb.velocity, transform.forward) > 0)
+                {
+                    wheel.motorTorque = -maxMotorTorqueTurbo * 1000;
+                }
+                else
+                {
+                    wheel.motorTorque = maxMotorTorqueTurbo * 1000;
+                }
             }
             rb.drag = 0.7f;
         }
