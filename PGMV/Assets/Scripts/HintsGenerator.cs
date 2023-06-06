@@ -1,17 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; // Add this for UI components
+using UnityEngine.UI;
 using TMPro;
 
 public class HintsGenerator : MonoBehaviour
 {
     public float timer = 10f;
-    public GameObject car; // The car object
+    public GameObject car;
     public RenderTexture textureToCopyFormat;
     public GameObject NavAgent;
 
-    //private GameObject box;
     private bool wantsHint = false;
     private int hint = 0;
     private float previousDistance;
@@ -30,50 +27,45 @@ public class HintsGenerator : MonoBehaviour
     {
         canvas = FindObjectOfType<Canvas>();
         hintButton = canvas.transform.Find("HintButton").GetComponent<Button>();
-        hintButton.gameObject.SetActive(false); //Começar com o botão desativado
-        previousDistance = Vector3.Distance(car.transform.position, box.transform.position); // Guardar a primeira distancia entre o carro e a caixa
-        timeSinceLastDecrease = 0f;
+        hintButton.gameObject.SetActive(false);
 
-        // Add a click event listener to the button
         Button buttonComponent = hintButton.GetComponent<Button>();
         buttonComponent.onClick.AddListener(HintButtonClicked);
     }
 
     void FixedUpdate()
     {
-        currentDistance = Vector3.Distance(car.transform.position, box.transform.position);
-        if ((int)currentDistance >= (int)previousDistance)
-        { 
-            timeSinceLastDecrease += Time.deltaTime;
-            if (timeSinceLastDecrease >= timer)
+        if (box != null)
+        {
+            currentDistance = Vector3.Distance(car.transform.position, box.transform.position);
+            if ((int)currentDistance >= (int)previousDistance)
             {
-                if (wantsHint)
+                timeSinceLastDecrease += Time.deltaTime;
+                if (timeSinceLastDecrease >= timer)
                 {
-                   
-                    ShowHint();
-                    timeSinceLastDecrease = 0f;
-                    
-                   
-                }
-                else
-                {
-                    hintButton.gameObject.SetActive(true);
+                    if (wantsHint)
+                    {
+                        ShowHint();
+                        timeSinceLastDecrease = 0f;
+                    }
+                    else
+                    {
+                        hintButton.gameObject.SetActive(true);
+                    }
                 }
             }
+            else
+            {
+                timeSinceLastDecrease = 0f;
+            }
+
+            if (hint == 3 || hint == 4)
+            {
+                ShowHint();
+            }
+
+            previousDistance = currentDistance;
         }
-        else
-        {
-            timeSinceLastDecrease = 0f;
-        }
-
-
-        if (hint == 3 || hint == 4)
-        {
-            ShowHint();
-        }
-
-        previousDistance = currentDistance;
-
     }
 
     private void ShowHint()
@@ -81,15 +73,29 @@ public class HintsGenerator : MonoBehaviour
         switch (hint)
         {
             case 1:
-                //dica 1
+                float x = box.transform.position.x;
+                float y = box.transform.position.y;
+                Vector3 center = new Vector3(x, 300f, y);
+
+                float distanceBetweenCasts = 40f;
+
+                CastRaycast(center + new Vector3(-distanceBetweenCasts, 0f, distanceBetweenCasts));
+                CastRaycast(center + new Vector3(0f, 0f, distanceBetweenCasts));
+                CastRaycast(center + new Vector3(distanceBetweenCasts, 0f, distanceBetweenCasts));
+                CastRaycast(center + new Vector3(distanceBetweenCasts, 0f, 0f));
+                CastRaycast(center + new Vector3(distanceBetweenCasts, 0f, -distanceBetweenCasts));
+                CastRaycast(center + new Vector3(0f, 0f, -distanceBetweenCasts));
+                CastRaycast(center + new Vector3(-distanceBetweenCasts, 0f, -distanceBetweenCasts));
+                CastRaycast(center + new Vector3(-distanceBetweenCasts, 0f, 0f));
                 wantsHint = false;
                 break;
             case 2:
-                GameObject cameraObject = new GameObject("HintCamera");
+                GameObject cameraObject = new("HintCamera");
                 Camera cameraComponent = cameraObject.AddComponent<Camera>();
                 cameraComponent.transform.position = new Vector3(box.transform.position.x, box.transform.position.y + 200, box.transform.position.z);
                 cameraComponent.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
-                RenderTexture texture = new RenderTexture(textureToCopyFormat);
+
+                RenderTexture texture = new(textureToCopyFormat);
                 cameraComponent.targetTexture = texture;
                 image = canvas.transform.Find("HintImage").GetComponent<RawImage>();
                 image.texture = texture;
@@ -105,7 +111,6 @@ public class HintsGenerator : MonoBehaviour
                 {
                     closer.gameObject.SetActive(false);
                     farther.gameObject.SetActive(true);
-
                 }
                 else
                 {
@@ -114,7 +119,6 @@ public class HintsGenerator : MonoBehaviour
                 }
 
                 wantsHint = false;
-                //dica 3
                 break;
             case 4:
                 closer.gameObject.SetActive(false);
@@ -135,7 +139,6 @@ public class HintsGenerator : MonoBehaviour
                 azimuth.gameObject.SetActive(true);
                 distance.gameObject.SetActive(true);
                 wantsHint = false;
-                //dica 4
                 break;
             case 5:
                 azimuth.gameObject.SetActive(false);
@@ -146,7 +149,6 @@ public class HintsGenerator : MonoBehaviour
                 nav.NavAgent = NavAgent;
                 nav.SpawnAgent();
                 wantsHint = false;
-                //dica 5
                 break;
             default:
                 break;
@@ -163,8 +165,21 @@ public class HintsGenerator : MonoBehaviour
         }
     }
 
-    public void setBox(GameObject box)
+    public void SetBox(GameObject box)
     {
         this.box = box;
+
+        previousDistance = Vector3.Distance(car.transform.position, box.transform.position);
+        timeSinceLastDecrease = 0f;
+    }
+
+    private void CastRaycast(Vector3 origin)
+    {
+        RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.down, 60f);
+
+        foreach(RaycastHit hit in hits)
+        {
+            Debug.Log(hit.collider.gameObject.transform.tag);
+        }
     }
 }

@@ -39,7 +39,7 @@ public class BoxSpawner : MonoBehaviour
                     boxController.boxMessage = boxMessage;
                 }
 
-                hintsGenerator.setBox(box);
+                hintsGenerator.SetBox(box);
             }
         }
     }

@@ -18,7 +18,7 @@ public class VehicleController : MonoBehaviour
     public float antiRollForce = 10;
     public float centerOfMassY = -10.0f;
     public float brakePower = 1000;
-    
+
     public CinemachineVirtualCamera cam;
     public GameTimer gameTimer;
 
@@ -33,8 +33,12 @@ public class VehicleController : MonoBehaviour
     private AudioSource engineSound;
     private Rigidbody rb;
     private bool changedCam = false;
-    private bool grounded = false;
+    private bool groundedVehicle = false;
+    private bool groundedWheels = false;
     private bool lightsOn = false;
+    private float elapsedTime = 0f;
+    private CinemachineBasicMultiChannelPerlin noise;
+    private bool isShaking = false;
 
     private void Start()
     {
@@ -51,18 +55,25 @@ public class VehicleController : MonoBehaviour
     {
         if (gameTimer.isTimerRunning)
         {
+            if (isShaking)
+            {
+                elapsedTime += Time.deltaTime;
+            }
             float motorInput = Input.GetAxis("Vertical");
             float steeringInput = Input.GetAxis("Horizontal");
             bool braking = Input.GetKey(KeyCode.Space);
             bool isTurbo = Input.GetKey(KeyCode.LeftShift);
+            bool unflip = Input.GetKey(KeyCode.F);
 
+            StopShake();
             Drive(motorInput, isTurbo);
             Steer(steeringInput);
             DecelerateWhenNoInput(motorInput);
             ApplyAntiRollForce();
             float brakeForce = braking ? brakePower : 0f;
             ApplyBraking(braking, brakeForce);
-            UnflipCar();
+            UnflipCar(unflip);
+            CheckOutOfBounds();
         }
         else
         {
@@ -75,7 +86,8 @@ public class VehicleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Garage") && !changedCam){
+        if (other.CompareTag("Garage") && !changedCam)
+        {
             cam.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance = 4;
             changedCam = true;
         }
@@ -102,7 +114,8 @@ public class VehicleController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Garage") && changedCam){
+        if (other.CompareTag("Garage") && changedCam)
+        {
             cam.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance = 8;
             changedCam = false;
         }
@@ -111,13 +124,39 @@ public class VehicleController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         collisionPlayer.PlayOneShot(collisionSound);
+        if (collision.gameObject.CompareTag("Terrain"))
+        {
+            groundedVehicle = true;
+        }
+        noise = cam.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
+        noise.m_AmplitudeGain = 10;
+        noise.m_FrequencyGain = 4;
+        isShaking = true;
     }
 
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Terrain"))
+        {
+            groundedVehicle = false;
+        }
+    }
+
+    private void StopShake()
+    {
+        if (elapsedTime >= 0.25)
+        {
+            noise.m_FrequencyGain = 0;
+            noise.m_AmplitudeGain = 0;
+            isShaking = false;
+            elapsedTime = 0;
+        }
+    }
 
 
     private void Drive(float input, bool isTurbo)
     {
-        if(rb.velocity.magnitude < 0.1)
+        if (rb.velocity.magnitude < 0.1)
         {
             engineSound.clip = idleEngineSound;
             engineSound.pitch = 1;
@@ -130,7 +169,7 @@ public class VehicleController : MonoBehaviour
         }
 
         if (!engineSound.isPlaying)
-        { 
+        {
             engineSound.Play();
         }
 
@@ -145,10 +184,24 @@ public class VehicleController : MonoBehaviour
         }
         else
         {
-            if (rb.velocity.magnitude > maxSpeedKPH / 3.6f)
+            if (rb.velocity.magnitude > maxSpeedKPH / 3.6f && (rb.velocity.magnitude - maxSpeedKPH / 3.6f) > 1)
             {
                 speed = maxTurboSpeedKPH;
                 torque = maxMotorTorque;
+                if (Vector3.Dot(rb.velocity, transform.forward) > 0)
+                {
+
+                    Vector3 backwardForce = -transform.forward * 140f;
+                    Debug.Log(backwardForce);
+                    rb.AddForce(backwardForce, ForceMode.Impulse);
+                }
+                else
+                {
+                    Vector3 forwardForce = transform.forward * 140f;
+
+                    rb.AddForce(forwardForce, ForceMode.Impulse);
+                }
+
             }
             else
             {
@@ -160,9 +213,9 @@ public class VehicleController : MonoBehaviour
         if (rb.velocity.magnitude < speed / 3.6f)
         {
             float motorTorque;
-            
+
             motorTorque = input * torque;
-            
+
             foreach (WheelCollider wheel in wheelColliders)
             {
                 wheel.motorTorque = motorTorque;
@@ -170,7 +223,7 @@ public class VehicleController : MonoBehaviour
         }
         else
         {
-            rb.velocity = rb.velocity.normalized * speed/3.6f;
+            rb.velocity = rb.velocity.normalized * speed / 3.6f;
         }
     }
 
@@ -212,7 +265,7 @@ public class VehicleController : MonoBehaviour
 
     private void ApplyBraking(bool braking, float brakeForce)
     {
-        if (braking && grounded)
+        if (braking && groundedWheels)
         {
             foreach (WheelCollider wheel in wheelColliders)
             {
@@ -245,7 +298,7 @@ public class VehicleController : MonoBehaviour
             if (groundedR)
                 travelR = (-wheelR.transform.InverseTransformPoint(hit.point).y - wheelR.radius) / wheelR.suspensionDistance;
 
-            grounded = groundedL && groundedR;
+            groundedWheels = groundedL && groundedR;
 
             antiRollForce = (travelL - travelR) * antiRollForce;
 
@@ -269,12 +322,23 @@ public class VehicleController : MonoBehaviour
         }
     }
 
-    private void UnflipCar()
+    private void UnflipCar(bool unflip)
     {
-        if (transform.up.y < 0)
+        if (unflip && groundedVehicle && transform.rotation.eulerAngles.z >= 180 && transform.rotation.eulerAngles.z < 360)
         {
-            Quaternion targetRotation = Quaternion.FromToRotation(transform.up, Vector3.up) * transform.rotation;
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 100 * Time.deltaTime);
+            transform.position = new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z);
+            Quaternion targetRotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, 3000 * Time.deltaTime);
+        }
+    }
+
+    private void CheckOutOfBounds()
+    {
+        if (transform.position.y < -3)
+        {
+            transform.position = new Vector3(132, 20.38f, -600);
+            transform.rotation = Quaternion.identity;
+            rb.velocity = new Vector3(0, 0, 0);
         }
     }
 }

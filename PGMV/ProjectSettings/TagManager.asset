@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Garage
   - Ingore
+  - Water
+  - Terrain
+  - WaterSquare
   layers:
   - Default
   - TransparentFX

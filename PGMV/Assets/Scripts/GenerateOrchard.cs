@@ -23,19 +23,13 @@ public class GenerateOrchard : MonoBehaviour
     public float scale = 20f;
 
     private Terrain orchard;
-    // Start is called before the first frame update
+
     void Start()
     {
         orchard = GetComponent<Terrain>();
         orchard.terrainData = OrchardGenerator(orchard.terrainData);
         GenerateTrees();
         GenerateRocksAndBushes();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     private void GenerateRocksAndBushes()
