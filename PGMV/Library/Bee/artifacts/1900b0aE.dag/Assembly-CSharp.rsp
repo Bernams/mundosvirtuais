@@ -380,7 +380,7 @@
 "Assets/Scripts/NewDayNightCycle.cs"
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/SetCamera.cs"
-"Assets/Scripts/SetNavAgentToGarage.cs"
+"Assets/Scripts/SetNavAgentToObject.cs"
 "Assets/Scripts/SpeedHUD.cs"
 "Assets/Scripts/VehicleController.cs"
 -langversion:9.0

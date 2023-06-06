@@ -112,7 +112,7 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _NormalLerp: 1
-    - _OcclusionStrength: 1
+    - _OcclusionStrength: 0
     - _Parallax: 0.02
     - _Shininess: 0.078125
     - _SmoothnessTextureChannel: 0
