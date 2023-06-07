@@ -10,6 +10,8 @@ public class GameTimer : MonoBehaviour
     public bool isTimerRunning;
     public BoxMessage boxMessage;
     public HintsGenerator hintsGenerator;
+    public AudioSource ambient;
+    public AudioSource car;
 
     private float currentTime;
     private Text timerText;
@@ -26,16 +28,6 @@ public class GameTimer : MonoBehaviour
         timerText = GetComponent<Text>();
         currentTime = timeLimit;
         isTimerRunning = true;
-        if (File.Exists(filePath))
-        {
-            using StreamReader reader = new StreamReader(filePath);
-            string rankInFile = reader.ReadLine();
-            rank = int.Parse(rankInFile);
-        }
-        else
-        {
-            rank = 3;
-        }
     }
 
     void FixedUpdate()
@@ -79,48 +71,14 @@ public class GameTimer : MonoBehaviour
         int totalBoxCount = boxMessage.GetTotalBoxCount();
         int totalHintsCount = hintsGenerator.GetTotalHintsCount();
 
-        if (totalBoxCount == 0)
-        {
-            rank = 0;
-            Debug.Log("Rank: 0. Você é horroroso.");
-        } else
-        {
-            float boxesPerHint = totalBoxCount / totalHintsCount;
-            switch (boxesPerHint)
-            {
-                case <= 0.2f:
-                    rank = 1;
-                    Debug.Log("Rank: " + rank);
-                    break;
-                case (<= 0.4f and > 0.2f):
-                    rank = 2;
-                    Debug.Log("Rank: " + rank);
-                    break;
-                case (<= 0.6f and > 0.4f):
-                    rank = 3;
-                    Debug.Log("Rank: " + rank);
-                    break;
-                case (<= 0.8f and > 0.6f):
-                    rank = 4;
-                    Debug.Log("Rank: " + rank);
-                    break;
-                case > 0.8f:
-                    rank = 5;
-                    Debug.Log("Rank: " + rank);
-                    break;
-                default:
-                    break;
-            }
-        }
-
         Canvas canvas = FindObjectOfType<Canvas>();
         Image gameOver = canvas.transform.Find("GameOver").GetComponent<Image>();
         Image rankImage = gameOver.transform.Find("Rank").GetComponent<Image>();
         TextMeshProUGUI rankText = rankImage.GetComponentInChildren<TextMeshProUGUI>();
-        rankText.text = "Rank: " + rank;
+        rankText.text = "Rank: " + hintsGenerator.GetRank();
         gameOver.gameObject.SetActive(true);
-
-        using StreamWriter writer = new StreamWriter(filePath, false);
-        writer.WriteLine(rank);
+        ambient.Stop();
+        car.Stop();
+        Time.timeScale = 0;
     }
 }
