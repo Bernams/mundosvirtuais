@@ -8,8 +8,9 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: leaf
-  m_Shader: {fileID: 4800000, guid: 17e009e15a323e541862cfaf4f5788b5, type: 3}
-  m_ValidKeywords: []
+  m_Shader: {fileID: 4800000, guid: 6ae32366f15a64fc19f245f040af8f21, type: 3}
+  m_ValidKeywords:
+  - _PARALLAXMAP
   m_InvalidKeywords:
   - _BENDINGCONTROLS_VERTEX_COLORS_AND_UV4
   m_LightmapFlags: 5
@@ -65,6 +66,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ShadowMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ShadowTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -75,30 +80,55 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AO: 0
     - _AfsXtraBending: 0
+    - _AmbientTranslucency: 0
+    - _AnimateNormal: 0
+    - _BackFaceSmoothness: 0
+    - _BaseLight: 1
     - _BendingControls: 1
     - _BumpScale: 1
-    - _Cutoff: 0.5
+    - _Culling: 0
+    - _Cutoff: 0.31
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EdgeFlutterInfluence: 0.25
     - _EmissionScaleUI: 0
+    - _EnableAdvancedEdgeBending: 0
+    - _EnableLeafTurbulence: 0
+    - _EnableShadowMap: 0
+    - _EnableTransFade: 1
+    - _FadeOutWind: 0
     - _Glossiness: 0.5
+    - _IsBark: 0
+    - _LODTerrain: 0
     - _LeafTurbulence: 0.5
     - _Metallic: 0
     - _Mode: 0
-    - _OcclusionStrength: 1
+    - _NormalLerp: 1
+    - _Occlusion: 7.5
+    - _OcclusionStrength: 0
     - _Parallax: 0.02
+    - _ShadowCulling: 0
     - _ShadowOffsetScale: 1
     - _ShadowStrength: 0.9
     - _SquashAmount: 1
     - _SrcBlend: 1
+    - _TimeOffset: 0.25
+    - _TranslucencyStrength: 1
     - _TranslucencyViewDependency: 0.7
+    - _TumbleFrequency: 1
+    - _TumbleStrength: 0
     - _UVSec: 0
+    - _ViewDependency: 0
     - _ZWrite: 1
     m_Colors:
+    - _AdvancedEdgeBending: {r: 0.1, g: 5, b: 0, a: 0}
+    - _BaseWindMultipliers: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColorUI: {r: 1, g: 1, b: 1, a: 1}
+    - _HueVariation: {r: 0.9, g: 0.5, b: 0, a: 0.1}
     - _SpecularReflectivity: {r: 0.11764706, g: 0.11764706, b: 0.11764706, a: 1}
     - _TranslucencyColor: {r: 0.5955882, g: 0.58154345, b: 0.35472533, a: 1}
     - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}

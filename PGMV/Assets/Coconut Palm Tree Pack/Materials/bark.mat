@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: bark
-  m_Shader: {fileID: 4800000, guid: e8b8fbd985faf174cb0e810efec8c066, type: 3}
+  m_Shader: {fileID: 4800000, guid: 6934a0dff195b47e5913f17edb3770ec, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _BENDINGCONTROLS_VERTEX_COLORS_AND_UV4
@@ -23,6 +23,10 @@ Material:
     m_TexEnvs:
     - _BumpMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _BumpSpecAOMap:
+        m_Texture: {fileID: 2800000, guid: 37fe0b5bbca93450593b8790186bf777, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpSpecMap:
@@ -43,6 +47,10 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _DetailNormalMap:
         m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMapX:
+        m_Texture: {fileID: 2800000, guid: 37fe0b5bbca93450593b8790186bf777, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -71,28 +79,38 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AO: 0
     - _AfsXtraBending: 0
+    - _BaseLight: 1
     - _BendingControls: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _DetailMode: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _EmissionScaleUI: 0
+    - _FadeOutWind: 0
     - _Glossiness: 0.5
+    - _IsBark: 1
+    - _LODTerrain: 0
     - _LeafTurbulence: 0.5
     - _Metallic: 0
     - _Mode: 0
-    - _OcclusionStrength: 1
+    - _OcclusionStrength: 0
     - _Parallax: 0.02
     - _SquashAmount: 1
     - _SrcBlend: 1
+    - _SwapUVS: 0
     - _TranslucencyViewDependency: 0.5
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - _AverageCol: {r: 1, g: 1, b: 1, a: 0.5}
+    - _BaseWindMultipliers: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _EmissionColorUI: {r: 1, g: 1, b: 1, a: 1}
+    - _HueVariation: {r: 0.9, g: 0.5, b: 0, a: 0.1}
     - _SpecColor: {r: 0.26666668, g: 0.26666668, b: 0.26666668, a: 1}
     - _SpecularReflectivity: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _TranslucencyColor: {r: 0, g: 0, b: 0, a: 1}
