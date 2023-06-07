@@ -86,7 +86,7 @@ public class VehicleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Garage") && !changedCam)
+        if (other.CompareTag("Garage") && !changedCam && CompareTag("Player"))
         {
             cam.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance = 4;
             changedCam = true;
@@ -114,7 +114,7 @@ public class VehicleController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Garage") && changedCam)
+        if (other.CompareTag("Garage") && changedCam && CompareTag("Player"))
         {
             cam.GetCinemachineComponent<Cinemachine3rdPersonFollow>().CameraDistance = 8;
             changedCam = false;

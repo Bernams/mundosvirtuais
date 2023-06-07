@@ -75,7 +75,15 @@ public class GameTimer : MonoBehaviour
         Image gameOver = canvas.transform.Find("GameOver").GetComponent<Image>();
         Image rankImage = gameOver.transform.Find("Rank").GetComponent<Image>();
         TextMeshProUGUI rankText = rankImage.GetComponentInChildren<TextMeshProUGUI>();
-        rankText.text = "Rank: " + hintsGenerator.GetRank();
+
+        if (totalBoxCount == 0)
+        {
+            rankText.text = "Rank: Noob";
+        }
+        else
+        {
+            rankText.text = "Rank: " + hintsGenerator.GetRank();
+        }
         gameOver.gameObject.SetActive(true);
         ambient.Stop();
         car.Stop();

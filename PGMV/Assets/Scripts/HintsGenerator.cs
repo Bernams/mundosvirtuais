@@ -219,9 +219,34 @@ public class HintsGenerator : MonoBehaviour
         return totalHintsCount;
     }
 
-    public int GetRank()
+    public string GetRank()
     {
-        return rank;
+        string rankName;
+        switch (rank)
+        {
+            case 0:
+                rankName = "Noob";
+                break;
+            case 1:
+                rankName = "Amateur";
+                break;
+            case 2:
+                rankName = "Beginner";
+                break;
+            case 3:
+                rankName = "Intermediate";
+                break;
+            case 4:
+                rankName = "Advanced";
+                break;
+            case 5:
+                rankName = "Expert";
+                break;
+            default:
+                rankName = "";
+                break;
+        }
+        return rankName;
     }
 
     public void CleanCanvas()
