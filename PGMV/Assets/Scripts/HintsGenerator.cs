@@ -4,14 +4,12 @@ using UnityEngine.UI;
 
 public class HintsGenerator : MonoBehaviour
 {
-    public float timer = 10f;
     public GameObject car;
     public RenderTexture textureToCopyFormat;
     public GameObject NavAgent;
-
     public LayerMask obstacleLayerMask;
+    public BoxMessage boxMessage;
 
-    private bool wantsHint = false;
     private int hint = 0;
     private float previousDistance;
     private float timeSinceLastDecrease;
@@ -26,12 +24,15 @@ public class HintsGenerator : MonoBehaviour
     private GameObject box;
     private float currentDistance;
 
+    private int rank;
+    private float timer;
+    private bool firstBox = true;
+
     private int totalHintsCount = 0;
 
     void Start()
     {
-        canvas = FindObjectOfType<Canvas>();
-        hintButton = canvas.transform.Find("HintButton").GetComponent<Button>();
+        SetVariables();
         hintButton.gameObject.SetActive(false);
 
         Button buttonComponent = hintButton.GetComponent<Button>();
@@ -48,15 +49,9 @@ public class HintsGenerator : MonoBehaviour
                 timeSinceLastDecrease += Time.deltaTime;
                 if (timeSinceLastDecrease >= timer && hint < 6)
                 {
-                    if (wantsHint)
-                    {
-                        ShowHint();
-                        timeSinceLastDecrease = 0f;
-                    }
-                    else
-                    {
-                        hintButton.gameObject.SetActive(true);
-                    }
+
+                    hintButton.gameObject.SetActive(true);
+
                 }
             }
             else
@@ -71,6 +66,18 @@ public class HintsGenerator : MonoBehaviour
 
             previousDistance = currentDistance;
         }
+    }
+
+    private void SetVariables()
+    {
+        canvas = FindObjectOfType<Canvas>();
+        description = canvas.transform.Find("Description").GetComponent<Image>();
+        hintButton = canvas.transform.Find("HintButton").GetComponent<Button>();
+        image = canvas.transform.Find("HintImage").GetComponent<RawImage>();
+        farther = canvas.transform.Find("Farther").GetComponent<Image>();
+        closer = canvas.transform.Find("Closer").GetComponent<Image>();
+        distance = canvas.transform.Find("Distance").GetComponent<Image>();
+        azimuth = canvas.transform.Find("Azimuth").GetComponent<Image>();
     }
 
     private void ShowHint()
@@ -91,7 +98,8 @@ public class HintsGenerator : MonoBehaviour
                     if (height < 25)
                     {
                         message = "Caixa está numa zona baixa, perto de ";
-                    } else
+                    }
+                    else
                     {
                         message = "Caixa está numa zona alta, perto de ";
                     }
@@ -117,13 +125,12 @@ public class HintsGenerator : MonoBehaviour
                             break;
                     }
 
-                    description = canvas.transform.Find("Description").GetComponent<Image>();
                     TextMeshProUGUI descriptionText = description.GetComponentInChildren<TextMeshProUGUI>();
                     descriptionText.text = message;
                     description.gameObject.SetActive(true);
+                    Debug.Log(message);
                 }
-                
-                wantsHint = false;
+
                 break;
             case 2:
                 GameObject cameraObject = new("HintCamera");
@@ -134,15 +141,11 @@ public class HintsGenerator : MonoBehaviour
                 description.gameObject.SetActive(false);
                 RenderTexture texture = new(textureToCopyFormat);
                 cameraComponent.targetTexture = texture;
-                image = canvas.transform.Find("HintImage").GetComponent<RawImage>();
                 image.texture = texture;
                 image.gameObject.SetActive(true);
-                wantsHint = false;
                 break;
             case 3:
                 image.gameObject.SetActive(false);
-                farther = canvas.transform.Find("Farther").GetComponent<Image>();
-                closer = canvas.transform.Find("Closer").GetComponent<Image>();
 
                 if (currentDistance > previousDistance && Mathf.Abs(currentDistance - previousDistance) > 0.01)
                 {
@@ -155,13 +158,10 @@ public class HintsGenerator : MonoBehaviour
                     farther.gameObject.SetActive(false);
                 }
 
-                wantsHint = false;
                 break;
             case 4:
                 closer.gameObject.SetActive(false);
                 farther.gameObject.SetActive(false);
-                distance = canvas.transform.Find("Distance").GetComponent<Image>();
-                azimuth = canvas.transform.Find("Azimuth").GetComponent<Image>();
                 TextMeshProUGUI distanceText = distance.GetComponentInChildren<TextMeshProUGUI>();
                 distanceText.text = "Distance: " + (Mathf.RoundToInt(currentDistance)).ToString();
                 TextMeshProUGUI azimuthText = azimuth.GetComponentInChildren<TextMeshProUGUI>();
@@ -175,7 +175,6 @@ public class HintsGenerator : MonoBehaviour
                 azimuthText.text = "Azimuth: " + (Mathf.RoundToInt(azimuthValue)).ToString();
                 azimuth.gameObject.SetActive(true);
                 distance.gameObject.SetActive(true);
-                wantsHint = false;
                 break;
             case 5:
                 azimuth.gameObject.SetActive(false);
@@ -185,7 +184,6 @@ public class HintsGenerator : MonoBehaviour
                 nav.car = car;
                 nav.NavAgent = NavAgent;
                 nav.SpawnAgent();
-                hint += 1;
                 break;
             default:
                 break;
@@ -193,27 +191,70 @@ public class HintsGenerator : MonoBehaviour
     }
 
     private void HintButtonClicked()
-    { 
+    {
         hintButton.gameObject.SetActive(false);
-        wantsHint = true;
-        if (hint < 5)
+        if (hint < 6)
         {
             hint += 1;
             totalHintsCount += 1;
         }
+        ShowHint();
+        timeSinceLastDecrease = 0f;
     }
 
     public void SetBox(GameObject box)
     {
+        SetVariables();
         this.box = box;
-
         previousDistance = Vector3.Distance(car.transform.position, box.transform.position);
         timeSinceLastDecrease = 0f;
+
+        SetRank();
+        CleanCanvas();
         hint = 0;
     }
 
     public int GetTotalHintsCount()
     {
         return totalHintsCount;
+    }
+
+    public int GetRank()
+    {
+        return rank;
+    }
+
+    public void CleanCanvas()
+    {
+        hintButton.gameObject.SetActive(false);
+        image.gameObject.SetActive(false);
+        farther.gameObject.SetActive(false);
+        closer.gameObject.SetActive(false);
+        distance.gameObject.SetActive(false);
+        azimuth.gameObject.SetActive(false);
+        description.gameObject.SetActive(false);
+
+    }
+
+    private void SetRank()
+    {
+        int totalBoxCount = boxMessage.GetTotalBoxCount();
+        if (totalBoxCount == 0)
+        {
+            if (firstBox)
+            {
+                rank = 3;
+                firstBox = false;
+            }
+            else
+            {
+                rank = 0;
+            }
+        }
+        else
+        {
+            rank = 5 - Mathf.RoundToInt(totalHintsCount / totalBoxCount);
+        }
+        timer = 60 / (rank + 1);
     }
 }
