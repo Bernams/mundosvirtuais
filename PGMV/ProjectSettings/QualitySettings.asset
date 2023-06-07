@@ -4,7 +4,7 @@
 QualitySettings:
   m_ObjectHideFlags: 0
   serializedVersion: 5
-  m_CurrentQuality: 0
+  m_CurrentQuality: 5
   m_QualitySettings:
   - serializedVersion: 2
     name: Very Low
@@ -151,8 +151,6 @@ QualitySettings:
     customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms:
     - WebGL
-    - Server
-    - Standalone
   - serializedVersion: 2
     name: Very High
     pixelLightCount: 3
@@ -189,8 +187,6 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms:
-    - Server
-    - Standalone
     - WebGL
   - serializedVersion: 2
     name: Ultra
@@ -228,8 +224,6 @@ QualitySettings:
     resolutionScalingFixedDPIFactor: 1
     customRenderPipeline: {fileID: 0}
     excludedTargetPlatforms:
-    - Standalone
-    - Server
     - WebGL
   m_PerPlatformDefaultQuality:
     Server: 0

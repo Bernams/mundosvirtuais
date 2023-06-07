@@ -46,7 +46,7 @@ public class HintsGenerator : MonoBehaviour
             if ((int)currentDistance >= (int)previousDistance)
             {
                 timeSinceLastDecrease += Time.deltaTime;
-                if (timeSinceLastDecrease >= timer)
+                if (timeSinceLastDecrease >= timer && hint < 6)
                 {
                     if (wantsHint)
                     {
@@ -186,7 +186,7 @@ public class HintsGenerator : MonoBehaviour
                 nav.car = car;
                 nav.NavAgent = NavAgent;
                 nav.SpawnAgent();
-                wantsHint = false;
+                //wantsHint = false;
                 break;
             default:
                 break;
@@ -197,7 +197,7 @@ public class HintsGenerator : MonoBehaviour
     { 
         hintButton.gameObject.SetActive(false);
         wantsHint = true;
-        if (hint < 5)
+        if (hint < 6)
         {
             hint += 1;
             totalHintsCount += 1;
@@ -210,6 +210,7 @@ public class HintsGenerator : MonoBehaviour
 
         previousDistance = Vector3.Distance(car.transform.position, box.transform.position);
         timeSinceLastDecrease = 0f;
+        hint = 0;
     }
 
     public int GetTotalHintsCount()

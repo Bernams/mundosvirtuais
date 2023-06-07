@@ -20,10 +20,8 @@ public class FurnitureGenerator : MonoBehaviour
         {
             GameObject positionObject = furniturePositions[i];
             GameObject prefab = furniturePrefabs[i];
-
-            Bounds prefabBounds = GetPrefabBounds(prefab);
-
-            while (true)
+            int count = 0;
+            while (count < 1000)
             {
                 float randomX = Random.Range(-positionInterval, positionInterval);
                 float randomZ = Random.Range(-positionInterval, positionInterval);
@@ -38,11 +36,14 @@ public class FurnitureGenerator : MonoBehaviour
                 GameObject instantiatedPrefab = Instantiate(prefab, randomPosition, randomRotation);
                 instantiatedPrefab.transform.parent = positionObject.transform;
 
+                Bounds prefabBounds = GetPrefabBounds(prefab);
+
                 if (garageBounds.Contains(prefabBounds.min + randomPosition - prefab.transform.position) &&
                     garageBounds.Contains(prefabBounds.max + randomPosition - prefab.transform.position))
                 {
                     break;
                 }
+                count -= 1;
                 Destroy(instantiatedPrefab);
             }
         }
