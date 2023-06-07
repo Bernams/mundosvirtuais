@@ -9,6 +9,10 @@ TagManager:
   - Water
   - Terrain
   - WaterSquare
+  - Beach
+  - Mountain
+  - Trees
+  - Orchard
   layers:
   - Default
   - TransparentFX
@@ -19,7 +23,7 @@ TagManager:
   - Esfera
   - Elemento_Pomar
   - Post_Processing
-  - 
+  - SquareType
   - 
   - 
   - 

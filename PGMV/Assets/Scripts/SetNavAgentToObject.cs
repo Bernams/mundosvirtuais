@@ -16,11 +16,41 @@ public class SetNavAgentToObject : MonoBehaviour
 
     private NavMeshAgent agent;
 
+    private float distance;
+
 
     void FixedUpdate()
     {
+
+        if (guide != null)
+        {
+            distance = Vector3.Distance(guide.transform.position, car.transform.position);
+            Renderer rd = guide.transform.Find("Character_Ghost").GetComponent<Renderer>();
+            Material mat = rd.material;
+            mat.SetFloat("_CarDistance", Mathf.Max(distance, 1.0f));
+        }
+
         if (agent != null)
         {
+
+            if (distance >= 30)
+            {
+                //Debug.Log("Here");
+                agent.isStopped = true;
+            }
+            else
+            {
+                agent.isStopped = false;
+            }
+
+
+
+            float desiredSpeed = Mathf.Clamp(distance * car.GetComponent<Rigidbody>().velocity.magnitude, 0f, car.GetComponent<VehicleController>().maxTurboSpeedKPH / 3.6f);
+
+            //Debug.Log(desiredSpeed);
+
+            agent.speed = desiredSpeed;
+
             if (!agent.pathPending)
             {
                 if (agent.remainingDistance <= agent.stoppingDistance)
@@ -42,7 +72,7 @@ public class SetNavAgentToObject : MonoBehaviour
         //NavAgent.SetActive(!isActive);
         if (!GameObject.Find("Guide(Clone)"))
         {
-            guide = Instantiate(NavAgent, car.transform.position+(car.transform.forward*6), car.transform.rotation);
+            guide = Instantiate(NavAgent, car.transform.position + (car.transform.forward * 6), car.transform.rotation);
         }
         //NavAgent.transform.position = new Vector3(car.transform.position.x, car.transform.position.y + 1, car.transform.position.z + 8);
         if (GameObject.Find("Guide(Clone)"))

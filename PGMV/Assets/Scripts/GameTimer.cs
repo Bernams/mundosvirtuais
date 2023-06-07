@@ -6,9 +6,12 @@ public class GameTimer : MonoBehaviour
 {
     public float timeLimit = 60f;
     public bool isTimerRunning;
+    public BoxMessage boxMessage;
+    public HintsGenerator hintsGenerator;
 
     private float currentTime;
     private Text timerText;
+    private int rank;
 
     void Start()
     {
@@ -27,6 +30,7 @@ public class GameTimer : MonoBehaviour
             if (currentTime <= 0f)
             {
                 isTimerRunning = false;
+                EndGame();
             }
         }
     }
@@ -52,4 +56,43 @@ public class GameTimer : MonoBehaviour
         }
     }
 
+    private void EndGame()
+    {
+        int totalBoxCount = boxMessage.GetTotalBoxCount();
+        int totalHintsCount = hintsGenerator.GetTotalHintsCount();
+
+        if (totalBoxCount == 0)
+        {
+            rank = 0;
+            Debug.Log("Rank: 0. Você é horroroso.");
+        } else
+        {
+            float boxesPerHint = totalBoxCount / totalHintsCount;
+            switch (boxesPerHint)
+            {
+                case <= 0.2f:
+                    rank = 1;
+                    Debug.Log("Rank: " + rank);
+                    break;
+                case (<= 0.4f and > 0.2f):
+                    rank = 2;
+                    Debug.Log("Rank: " + rank);
+                    break;
+                case (<= 0.6f and > 0.4f):
+                    rank = 3;
+                    Debug.Log("Rank: " + rank);
+                    break;
+                case (<= 0.8f and > 0.6f):
+                    rank = 4;
+                    Debug.Log("Rank: " + rank);
+                    break;
+                case > 0.8f:
+                    rank = 5;
+                    Debug.Log("Rank: " + rank);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }

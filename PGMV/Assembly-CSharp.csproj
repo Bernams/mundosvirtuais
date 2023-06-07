@@ -73,6 +73,7 @@
     <Compile Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Scripts/CTI_Utils.cs" />
     <Compile Include="Assets/Scripts/PlayerController.cs" />
     <Compile Include="Assets/Scripts/DoorController.cs" />
+    <Compile Include="Assets/Scripts/WindZoneController.cs" />
     <Compile Include="Assets/Scripts/Moon_Controller.cs" />
     <Compile Include="Assets/AQUAS-Lite/Scripts/AQUAS_Lite_CamNav.cs" />
     <Compile Include="Assets/Scripts/BoxCollector.cs" />
@@ -82,7 +83,6 @@
     <Compile Include="Assets/Scripts/BoxController.cs" />
     <Compile Include="Assets/Grass And Flowers Pack 1/Example Scene/SimpleTextureDrawing.cs" />
     <Compile Include="Assets/Scripts/BoxMessage.cs" />
-    <Compile Include="Assets/Scripts/WindZoneController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/CTI_LOD_Bark_Array_301.shader" />
@@ -100,6 +100,7 @@
     <None Include="Assets/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets/AQUAS-Lite/Shaders/AQUAS-Lite_Frontface.shader" />
     <None Include="Assets/Conifers [BOTD]/Getting started.txt" />
+    <None Include="Assets/HalloweenMonstersGhost/PrefabsSingle/GuideShader.shader" />
     <None Include="Assets/Coconut Palm Tree Pack/Shaders/TFP_treecreator/TFPTreeCreatorLeavesOptimized.shader" />
     <None Include="Assets/Conifers [BOTD]/Render Pipeline Support/Built-in RP/CTI Runtime Components/Shaders/Includes/CTI_BillboardVertex_301.cginc" />
     <None Include="Assets/AQUAS-Lite/Readme.txt" />

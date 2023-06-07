@@ -1,6 +1,6 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
 public class HintsGenerator : MonoBehaviour
 {
@@ -8,6 +8,8 @@ public class HintsGenerator : MonoBehaviour
     public GameObject car;
     public RenderTexture textureToCopyFormat;
     public GameObject NavAgent;
+
+    public LayerMask obstacleLayerMask;
 
     private bool wantsHint = false;
     private int hint = 0;
@@ -20,8 +22,11 @@ public class HintsGenerator : MonoBehaviour
     private Image closer;
     private Image distance;
     private Image azimuth;
+    private Image description;
     private GameObject box;
     private float currentDistance;
+
+    private int totalHintsCount = 0;
 
     void Start()
     {
@@ -73,20 +78,52 @@ public class HintsGenerator : MonoBehaviour
         switch (hint)
         {
             case 1:
-                float x = box.transform.position.x;
-                float y = box.transform.position.y;
-                Vector3 center = new Vector3(x, 300f, y);
+                Vector3 origin = new Vector3(box.transform.position.x, 400f, box.transform.position.y);
 
-                float distanceBetweenCasts = 40f;
+                RaycastHit hit;
+                if (Physics.Raycast(origin, Vector3.down, out hit, 60f, obstacleLayerMask))
+                {
+                    string tag = hit.collider.gameObject.transform.tag;
+                    float height = hit.collider.gameObject.transform.position.y;
 
-                CastRaycast(center + new Vector3(-distanceBetweenCasts, 0f, distanceBetweenCasts));
-                CastRaycast(center + new Vector3(0f, 0f, distanceBetweenCasts));
-                CastRaycast(center + new Vector3(distanceBetweenCasts, 0f, distanceBetweenCasts));
-                CastRaycast(center + new Vector3(distanceBetweenCasts, 0f, 0f));
-                CastRaycast(center + new Vector3(distanceBetweenCasts, 0f, -distanceBetweenCasts));
-                CastRaycast(center + new Vector3(0f, 0f, -distanceBetweenCasts));
-                CastRaycast(center + new Vector3(-distanceBetweenCasts, 0f, -distanceBetweenCasts));
-                CastRaycast(center + new Vector3(-distanceBetweenCasts, 0f, 0f));
+                    string message;
+
+                    if (height < 25)
+                    {
+                        message = "Caixa está numa zona baixa, perto de ";
+                    } else
+                    {
+                        message = "Caixa está numa zona alta, perto de ";
+                    }
+
+                    switch (tag)
+                    {
+                        case "Beach":
+                            message += "uma praia";
+                            break;
+                        case "WaterSquare":
+                            message += "água";
+                            break;
+                        case "Mountain":
+                            message += "montanhas";
+                            break;
+                        case "Trees":
+                            message += "árvores";
+                            break;
+                        case "Orchard":
+                            message += "um pomar";
+                            break;
+                        default:
+                            break;
+                    }
+
+                    description = canvas.transform.Find("Description").GetComponent<Image>();
+                    TextMeshProUGUI descriptionText = description.GetComponentInChildren<TextMeshProUGUI>();
+                    descriptionText.text = message;
+                    description.gameObject.SetActive(true);
+                    Debug.Log(message);
+                }
+                
                 wantsHint = false;
                 break;
             case 2:
@@ -95,6 +132,7 @@ public class HintsGenerator : MonoBehaviour
                 cameraComponent.transform.position = new Vector3(box.transform.position.x, box.transform.position.y + 200, box.transform.position.z);
                 cameraComponent.transform.rotation = Quaternion.Euler(90f, 0f, 0f);
 
+                description.gameObject.SetActive(false);
                 RenderTexture texture = new(textureToCopyFormat);
                 cameraComponent.targetTexture = texture;
                 image = canvas.transform.Find("HintImage").GetComponent<RawImage>();
@@ -162,6 +200,7 @@ public class HintsGenerator : MonoBehaviour
         if (hint < 5)
         {
             hint += 1;
+            totalHintsCount += 1;
         }
     }
 
@@ -173,13 +212,8 @@ public class HintsGenerator : MonoBehaviour
         timeSinceLastDecrease = 0f;
     }
 
-    private void CastRaycast(Vector3 origin)
+    public int GetTotalHintsCount()
     {
-        RaycastHit[] hits = Physics.RaycastAll(origin, Vector3.down, 60f);
-
-        foreach(RaycastHit hit in hits)
-        {
-            Debug.Log(hit.collider.gameObject.transform.tag);
-        }
+        return totalHintsCount;
     }
 }

@@ -7,12 +7,12 @@ public class BoxMessage : MonoBehaviour
 {
     private Text messageText;
     private bool hasBox = false;
-    private int total = 0;
+    private int totalBoxCount = 0;
 
     public void Start()
     {
         messageText = GetComponent<Text>();
-        messageText.text = "Caixas depositadas: " + total;
+        messageText.text = "Caixas depositadas: " + totalBoxCount;
     }
 
     public bool HasBox()
@@ -28,8 +28,8 @@ public class BoxMessage : MonoBehaviour
 
     public void DepositBox()
     {
-        total += 1;
-        messageText.text = "Caixa depositada!\n\nCaixas depositadas: " + total;
+        totalBoxCount += 1;
+        messageText.text = "Caixa depositada!\n\nCaixas depositadas: " + totalBoxCount;
         hasBox = false;
         StartCoroutine(ResetMessage());
     }
@@ -37,6 +37,11 @@ public class BoxMessage : MonoBehaviour
     private IEnumerator ResetMessage()
     {
         yield return new WaitForSeconds(10f);
-        messageText.text = "Caixas depositadas: " + total;
+        messageText.text = "Caixas depositadas: " + totalBoxCount;
+    }
+
+    public int GetTotalBoxCount()
+    {
+        return totalBoxCount;
     }
 }

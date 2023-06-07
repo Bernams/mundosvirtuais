@@ -192,7 +192,6 @@ public class VehicleController : MonoBehaviour
                 {
 
                     Vector3 backwardForce = -transform.forward * 140f;
-                    Debug.Log(backwardForce);
                     rb.AddForce(backwardForce, ForceMode.Impulse);
                 }
                 else
