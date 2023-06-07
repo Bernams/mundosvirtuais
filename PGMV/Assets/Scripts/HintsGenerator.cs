@@ -121,7 +121,6 @@ public class HintsGenerator : MonoBehaviour
                     TextMeshProUGUI descriptionText = description.GetComponentInChildren<TextMeshProUGUI>();
                     descriptionText.text = message;
                     description.gameObject.SetActive(true);
-                    Debug.Log(message);
                 }
                 
                 wantsHint = false;
@@ -186,7 +185,7 @@ public class HintsGenerator : MonoBehaviour
                 nav.car = car;
                 nav.NavAgent = NavAgent;
                 nav.SpawnAgent();
-                //wantsHint = false;
+                hint += 1;
                 break;
             default:
                 break;
@@ -197,7 +196,7 @@ public class HintsGenerator : MonoBehaviour
     { 
         hintButton.gameObject.SetActive(false);
         wantsHint = true;
-        if (hint < 6)
+        if (hint < 5)
         {
             hint += 1;
             totalHintsCount += 1;
