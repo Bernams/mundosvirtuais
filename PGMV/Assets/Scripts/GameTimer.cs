@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using TMPro;
 
 public class GameTimer : MonoBehaviour
 {
@@ -12,12 +14,28 @@ public class GameTimer : MonoBehaviour
     private float currentTime;
     private Text timerText;
     private int rank;
+    private string filePath;
+
+    private void Awake()
+    {
+        filePath = Path.Combine(Application.persistentDataPath, "rank.txt");
+    }
 
     void Start()
     {
         timerText = GetComponent<Text>();
         currentTime = timeLimit;
         isTimerRunning = true;
+        if (File.Exists(filePath))
+        {
+            using StreamReader reader = new StreamReader(filePath);
+            string rankInFile = reader.ReadLine();
+            rank = int.Parse(rankInFile);
+        }
+        else
+        {
+            rank = 3;
+        }
     }
 
     void FixedUpdate()
@@ -94,5 +112,15 @@ public class GameTimer : MonoBehaviour
                     break;
             }
         }
+
+        Canvas canvas = FindObjectOfType<Canvas>();
+        Image gameOver = canvas.transform.Find("GameOver").GetComponent<Image>();
+        Image rankImage = gameOver.transform.Find("Rank").GetComponent<Image>();
+        TextMeshProUGUI rankText = rankImage.GetComponentInChildren<TextMeshProUGUI>();
+        rankText.text = "Rank: " + rank;
+        gameOver.gameObject.SetActive(true);
+
+        using StreamWriter writer = new StreamWriter(filePath, false);
+        writer.WriteLine(rank);
     }
 }

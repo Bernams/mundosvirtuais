@@ -13,7 +13,6 @@ public class DoorController : MonoBehaviour
     private void Start()
     {
         startRotation = pivot.transform.localRotation;
-        Debug.Log(pivot.transform.localRotation);
         targetRotation = startRotation;
         currentRotation = startRotation;
     }
@@ -50,8 +49,6 @@ public class DoorController : MonoBehaviour
         else
         {
             pivot.transform.localRotation = Quaternion.RotateTowards(pivot.transform.localRotation, startRotation, rotationSpeed * Time.deltaTime);
-
-            Debug.Log(pivot.transform.localRotation);
 
 
             if (pivot.transform.localRotation == startRotation)
