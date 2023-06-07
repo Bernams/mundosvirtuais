@@ -32,7 +32,7 @@ public class FurnitureGenerator : MonoBehaviour
                 Vector3 randomPosition = positionObject.transform.position + new Vector3(randomX, 0, randomZ);
                 Quaternion randomRotation = Quaternion.Euler(
                     garage.transform.rotation.x,
-                    positionObject.transform.rotation.y + randomYRotation,
+                    garage.transform.rotation.eulerAngles.y + randomYRotation,
                     garage.transform.rotation.z);
 
                 GameObject instantiatedPrefab = Instantiate(prefab, randomPosition, randomRotation);

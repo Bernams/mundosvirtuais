@@ -12,7 +12,8 @@ public class DoorController : MonoBehaviour
 
     private void Start()
     {
-        startRotation = pivot.transform.rotation;
+        startRotation = pivot.transform.localRotation;
+        Debug.Log(pivot.transform.localRotation);
         targetRotation = startRotation;
         currentRotation = startRotation;
     }
@@ -22,7 +23,7 @@ public class DoorController : MonoBehaviour
         if (other.CompareTag("Player") && !isOpen)
         {
             isOpen = true;
-            targetRotation = Quaternion.Euler(-90f, 0f, 0f);
+            targetRotation = Quaternion.Euler(pivot.transform.localRotation.x - 90f, pivot.transform.localRotation.y, pivot.transform.localRotation.z);
         }
     }
 
@@ -39,18 +40,21 @@ public class DoorController : MonoBehaviour
     {
         if (isOpen)
         {
-            pivot.transform.rotation = Quaternion.RotateTowards(pivot.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            pivot.transform.localRotation = Quaternion.RotateTowards(pivot.transform.localRotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            if (pivot.transform.rotation == targetRotation)
+            if (pivot.transform.localRotation == targetRotation)
             {
                 currentRotation = targetRotation;
             }
         }
         else
         {
-            pivot.transform.rotation = Quaternion.RotateTowards(pivot.transform.rotation, startRotation, rotationSpeed * Time.deltaTime);
+            pivot.transform.localRotation = Quaternion.RotateTowards(pivot.transform.localRotation, startRotation, rotationSpeed * Time.deltaTime);
 
-            if (pivot.transform.rotation == startRotation)
+            Debug.Log(pivot.transform.localRotation);
+
+
+            if (pivot.transform.localRotation == startRotation)
             {
                 currentRotation = startRotation;
             }
